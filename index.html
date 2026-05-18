@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Minerva World Wise — Interview Cockpit / 面試駕駛艙 — Vincent Cai</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --bg-2: #1e293b;
+    --bg-3: #334155;
+    --card: #1e293b;
+    --card-hover: #273449;
+    --border: #334155;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-bright: #f1f5f9;
+    --accent: #38bdf8;
+    --accent-2: #22d3ee;
+    --accent-warm: #fbbf24;
+    --en: #93c5fd;
+    --zh: #fcd34d;
+    --good: #4ade80;
+    --warn: #f87171;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  body { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+  /* Sidebar */
+  aside.nav {
+    background: var(--bg-2);
+    border-right: 1px solid var(--border);
+    padding: 20px 18px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .brand {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 4px;
+  }
+  .brand-sub {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 22px;
+    line-height: 1.3;
+  }
+  .nav-toggle-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+    background: var(--bg);
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .nav-toggle-row button {
+    flex: 1;
+    background: transparent;
+    color: var(--text-dim);
+    border: 0;
+    padding: 7px 0;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .nav-toggle-row button.on {
+    background: var(--accent);
+    color: #0c1325;
+  }
+  .nav-search {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 9px 12px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-size: 14px;
+  }
+  .nav-section { margin-bottom: 14px; }
+  .nav-section-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    padding-left: 4px;
+  }
+  .nav a {
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+    padding: 7px 10px;
+    border-radius: 7px;
+    font-size: 13.5px;
+    line-height: 1.4;
+    margin-bottom: 2px;
+    border-left: 3px solid transparent;
+    transition: all .15s;
+  }
+  .nav a:hover {
+    background: var(--bg-3);
+    border-left-color: var(--accent);
+  }
+  /* Main */
+  main {
+    padding: 28px 40px 80px 40px;
+    max-width: 1100px;
+  }
+  h1 {
+    font-size: 28px;
+    color: var(--text-bright);
+    margin: 0 0 6px 0;
+  }
+  h1 .sub {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+  h2 {
+    font-size: 22px;
+    color: var(--accent);
+    margin: 36px 0 14px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    scroll-margin-top: 20px;
+  }
+  h3 { color: var(--text-bright); font-size: 17px; margin: 16px 0 8px 0; }
+  /* Top status bar */
+  .status-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .status-bar .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    border-radius: 10px;
+  }
+  .stat-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+  .stat-value { font-size: 18px; color: var(--text-bright); font-weight: 600; margin-top: 4px; }
+  /* Cheat-sheet block at top */
+  .cheat-sheet {
+    background: linear-gradient(135deg, #0b3a52 0%, #1e293b 100%);
+    border: 1px solid #1d4ed8;
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 28px;
+  }
+  .cheat-sheet h3 { color: var(--accent-2); margin-top: 0; }
+  .cheat-sheet ul { padding-left: 20px; margin: 8px 0; }
+  .cheat-sheet li { margin-bottom: 4px; }
+  /* Q&A card */
+  .qa-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+    scroll-margin-top: 20px;
+    transition: border-color .15s;
+  }
+  .qa-card:hover { border-color: var(--accent); }
+  .qa-card .q-tag {
+    display: inline-block;
+    font-size: 10.5px;
+    background: var(--bg-3);
+    color: var(--accent-2);
+    padding: 3px 9px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .qa-card .q-en {
+    font-size: 17px;
+    color: var(--text-bright);
+    font-weight: 600;
+    margin: 4px 0 4px 0;
+  }
+  .qa-card .q-zh {
+    font-size: 14.5px;
+    color: var(--zh);
+    margin: 0 0 14px 0;
+    line-height: 1.5;
+  }
+  .answer-block {
+    background: var(--bg);
+    border-left: 3px solid var(--en);
+    padding: 14px 16px;
+    border-radius: 8px;
+    margin: 10px 0;
+  }
+  .answer-block.zh { border-left-color: var(--zh); }
+  .answer-block .label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--en);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .answer-block.zh .label { color: var(--zh); }
+  .answer-block p { margin: 0 0 8px 0; }
+  .answer-block p:last-child { margin-bottom: 0; }
+  .answer-block strong { color: var(--text-bright); }
+  .answer-block .pause { color: var(--accent-2); font-style: italic; }
+  .talking-points {
+    background: rgba(74, 222, 128, .07);
+    border-left: 3px solid var(--good);
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 10px 0 0 0;
+  }
+  .talking-points .label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--good);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .talking-points ul { margin: 4px 0 0 0; padding-left: 18px; font-size: 13.5px; }
+  .talking-points li { margin-bottom: 3px; }
+  .hint {
+    background: rgba(251, 191, 36, .08);
+    border-left: 3px solid var(--accent-warm);
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+  }
+  .hint .label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--accent-warm);
+    margin-right: 6px;
+  }
+  /* Mode controls (hide ZH/EN) */
+  body[data-mode="en"] .answer-block.zh,
+  body[data-mode="en"] .q-zh,
+  body[data-mode="en"] .zh-only { display: none; }
+  body[data-mode="zh"] .answer-block:not(.zh),
+  body[data-mode="zh"] .q-en,
+  body[data-mode="zh"] .en-only { display: none; }
+  /* Rescue panel */
+  .rescue-panel {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 100;
+  }
+  .rescue-btn {
+    background: var(--accent-warm);
+    color: #1a1407;
+    border: 0;
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+  }
+  .rescue-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+  .rescue-modal.open { display: flex; }
+  .rescue-modal .box {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px 28px;
+    max-width: 720px;
+    max-height: 85vh;
+    overflow-y: auto;
+    width: 92%;
+  }
+  .rescue-modal h3 { margin-top: 0; color: var(--accent-warm); }
+  .rescue-modal .phrase {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+  }
+  .rescue-modal .phrase .en-p { color: var(--en); font-weight: 600; font-size: 14.5px; }
+  .rescue-modal .phrase .zh-p { color: var(--zh); font-size: 13px; margin-top: 3px; }
+  .rescue-modal .phrase .ctx { color: var(--text-dim); font-size: 12px; margin-top: 3px; font-style: italic; }
+  .rescue-close {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    float: right;
+    margin-top: 12px;
+  }
+  /* Misc */
+  .vocab-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--card);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .vocab-table th, .vocab-table td {
+    padding: 9px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .vocab-table th { background: var(--bg-3); color: var(--accent-2); font-size: 12px; text-transform: uppercase; }
+  .vocab-table td:first-child { color: var(--text-bright); font-weight: 600; }
+  .vocab-table td:nth-child(2) { color: var(--text-dim); font-size: 12.5px; font-style: italic; }
+  .pill {
+    display: inline-block;
+    background: var(--bg-3);
+    color: var(--accent-2);
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+  .quote {
+    background: var(--bg-2);
+    border-left: 4px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-style: italic;
+    color: var(--text);
+    margin: 10px 0;
+  }
+  @media (max-width: 900px) {
+    body { grid-template-columns: 1fr; }
+    aside.nav { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+    main { padding: 20px; }
+  }
+  @media print {
+    body { grid-template-columns: 1fr; background: white; color: black; }
+    aside.nav, .rescue-panel { display: none; }
+    .qa-card, .cheat-sheet, .answer-block, .talking-points, .hint { break-inside: avoid; }
+  }
+</style>
+</head>
+<body data-mode="both">
+<aside class="nav">
+  <div class="brand">Minerva World Wise</div>
+  <div class="brand-sub">Interview Cockpit<br/><span style="font-size:13px;font-weight:400;color:var(--text-dim)">面試駕駛艙 · Vincent Cai</span></div>
+
+  <div class="nav-toggle-row" id="modeToggle">
+    <button data-mode="both" class="on">EN + 中</button>
+    <button data-mode="en">EN</button>
+    <button data-mode="zh">中</button>
+  </div>
+
+  <input class="nav-search" id="search" placeholder="🔍 Search questions…" />
+
+  <div class="nav-section">
+    <div class="nav-section-title">速查 · Quick Reference</div>
+    <a href="#priority" style="color:#fb923c;font-weight:700">🎯 30 分鐘優先順序地圖</a>
+    <a href="#tight" style="color:#fb923c;font-weight:700">🎬 縮版（60–75 秒，面試日念這個）</a>
+    <a href="#cheat">⚡ Top-of-Mind Cheat Sheet</a>
+    <a href="#myanswers" style="color:#c4b5fd;font-weight:700">🎙 我的真實回答（完整版備用）</a>
+    <a href="#tonight" style="color:var(--accent-warm);font-weight:600">📅 6 天練習計畫</a>
+    <a href="#program">📚 Program Facts (must-know)</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Survival Kit</div>
+    <a href="#rescue">🆘 Rescue Phrases</a>
+    <a href="#vocab">📖 Key Vocabulary</a>
+    <a href="#dont">🚫 What NOT to Say</a>
+  </div>
+</aside>
+
+<main>
+
+  <h1>Minerva World Wise — Interview Cockpit
+    <span class="sub">Vincent Cai · Junyi Academy Foundation · Nippon Foundation NPO Scholarship</span>
+  </h1>
+
+  <div class="status-bar">
+    <div class="stat" style="border-color:#f97316">
+      <div class="stat-label" style="color:#fb923c">Interview</div>
+      <div class="stat-value">Sat May 24 · 6:00 PM · <strong style="color:#fb923c">30 min</strong></div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Format</div>
+      <div class="stat-value">Video · English · Tomoko Ichikawa</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Cohort Starts</div>
+      <div class="stat-value">June 2026 · East Asia Pilot</div>
+    </div>
+  </div>
+
+  <!-- ========== ONLY 5 THINGS (EMERGENCY ANCHOR) ========== -->
+  <div class="cheat-sheet" id="only5" style="background:linear-gradient(135deg,#7c2d12 0%,#1e293b 100%);border-color:#f97316;margin-bottom:18px">
+    <h3 style="color:#fb923c;margin-top:0">🎯 如果只能記住五件事 · The Only 5 Things</h3>
+    <p style="color:var(--text);font-size:14px;margin:8px 0 14px 0;font-style:italic">緊張時瞄這裡。其他全部忘記也沒關係。</p>
+
+    <div style="background:rgba(0,0,0,0.35);padding:14px 16px;border-radius:8px;margin-bottom:10px;border-left:3px solid #fb923c">
+      <div style="font-weight:700;color:#fb923c;font-size:13px;margin-bottom:6px">① 開場 10 秒 · 背到自動播放</div>
+      <div style="color:var(--text-bright);font-size:15px;line-height:1.5">"I'm Vincent Cai, Sustainability Impact Director at Junyi Academy Foundation — Taiwan's largest education non-profit, reaching over 5 million learners."</div>
+      <div style="color:var(--zh);font-size:13px;line-height:1.5;margin-top:6px;padding-top:6px;border-top:1px dashed rgba(252,211,77,0.25)">「我是 Vincent Cai，均一平台教育基金會的永續影響長——台灣最大的教育非營利、服務超過 500 萬學習者。」</div>
+    </div>
+
+    <div style="background:rgba(0,0,0,0.35);padding:14px 16px;border-radius:8px;margin-bottom:10px;border-left:3px solid #fb923c">
+      <div style="font-weight:700;color:#fb923c;font-size:13px;margin-bottom:6px">② "為什麼是現在" · 一句話收所有 why 類問題</div>
+      <div style="color:var(--text-bright);font-size:15px;line-height:1.5">"I survived Dengue last year. That clarity is why I'm here. I need structured frameworks to scale impact beyond Taiwan — and Minerva's active learning is exactly that."</div>
+      <div style="color:var(--zh);font-size:13px;line-height:1.5;margin-top:6px;padding-top:6px;border-top:1px dashed rgba(252,211,77,0.25)">「去年我從登革熱倖存。那份清晰是我來這裡的原因。我需要結構化的框架，把影響力擴大到台灣以外——Minerva 的主動學習正是這個。」</div>
+    </div>
+
+    <div style="background:rgba(0,0,0,0.35);padding:14px 16px;border-radius:8px;margin-bottom:10px;border-left:3px solid #fb923c">
+      <div style="font-weight:700;color:#fb923c;font-size:13px;margin-bottom:6px">③ 兩個模組名 · 一字不差（保留英文原名）</div>
+      <div style="color:var(--text-bright);font-size:15px;line-height:1.7"><strong>"Leadership in Complexity"</strong><br/><strong>"Communication for Leading High-Performing Global Teams"</strong></div>
+      <div style="color:var(--zh);font-size:13px;line-height:1.5;margin-top:6px;padding-top:6px;border-top:1px dashed rgba(252,211,77,0.25)">「複雜性領導力」+「領導高績效全球團隊的溝通」——計畫的兩個核心課程，務必用英文原名念出。</div>
+    </div>
+
+    <div style="background:rgba(0,0,0,0.35);padding:14px 16px;border-radius:8px;margin-bottom:10px;border-left:3px solid #fb923c">
+      <div style="font-weight:700;color:#fb923c;font-size:13px;margin-bottom:6px">④ 獎學金算式 + 兩個字</div>
+      <div style="color:var(--text-bright);font-size:15px;line-height:1.6">Scholarship → me → Junyi team → <strong>5 million learners</strong> → under-resourced kids<br/>結尾 <strong>"It compounds."</strong> 停兩秒。</div>
+      <div style="color:var(--zh);font-size:13px;line-height:1.5;margin-top:6px;padding-top:6px;border-top:1px dashed rgba(252,211,77,0.25)">獎學金 → 我 → 均一團隊 → <strong>500 萬學習者</strong> → 資源不足的孩子。結尾用 <strong>"It compounds."（它會複利）</strong>停兩秒。</div>
+    </div>
+
+    <div style="background:rgba(0,0,0,0.35);padding:14px 16px;border-radius:8px;border-left:3px solid #fb923c">
+      <div style="font-weight:700;color:#fb923c;font-size:13px;margin-bottom:6px">⑤ 三個執行動作（不是內容）</div>
+      <div style="color:var(--text-bright);font-size:14.5px;line-height:1.7">
+        🐌 <strong>慢 30%</strong> — 停頓是 executive，不是緊張<br/>
+        ❓ <strong>聽不懂就問</strong> — "Could you rephrase that?"<br/>
+        😊 <strong>微笑開場</strong> — 視訊上她看得到
+      </div>
+    </div>
+
+    <p style="color:#fcd34d;font-size:13.5px;margin:14px 0 0 0;text-align:center;font-style:italic">你不是去說服她，你是去告訴她一個她需要知道的故事。</p>
+  </div>
+
+  <!-- ========== 30-MIN PRIORITY MAP ========== -->
+  <h2 id="priority" style="color:#fb923c;border-bottom-color:#f97316">🎯 30 分鐘優先順序地圖</h2>
+
+  <div class="qa-card" style="border-color:#f97316;background:linear-gradient(135deg,rgba(249,115,22,0.08),rgba(30,41,59,1))">
+    <p style="margin-top:0;color:#fb923c;font-size:14px"><strong>30 分鐘面試只塞得下 5–7 個實質問題 + 反問。</strong> 這是預測 Tomoko 會問的順序、你該用哪個答案、目標秒數。</p>
+
+    <table style="width:100%;border-collapse:collapse;font-size:13.5px;background:transparent;margin-top:12px">
+      <thead>
+        <tr style="background:rgba(0,0,0,0.3)">
+          <th style="padding:10px;text-align:left;color:#fb923c;border-bottom:1px solid var(--border)">機率</th>
+          <th style="padding:10px;text-align:left;color:#fb923c;border-bottom:1px solid var(--border)">題目</th>
+          <th style="padding:10px;text-align:left;color:#fb923c;border-bottom:1px solid var(--border)">你的彈藥</th>
+          <th style="padding:10px;text-align:right;color:#fb923c;border-bottom:1px solid var(--border)">秒數</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:9px;border-bottom:1px solid var(--border);color:var(--warn)">🔴 100%</td><td style="padding:9px;border-bottom:1px solid var(--border)"><strong>Tell me about yourself</strong></td><td style="padding:9px;border-bottom:1px solid var(--border)">Q1 縮版（含登革熱結尾）</td><td style="padding:9px;text-align:right;border-bottom:1px solid var(--border);color:var(--accent-2)">~65s</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid var(--border);color:var(--warn)">🔴 100%</td><td style="padding:9px;border-bottom:1px solid var(--border)"><strong>Why Minerva World Wise?</strong></td><td style="padding:9px;border-bottom:1px solid var(--border)">Q2 縮版（AI 時代 + active learning + Junyi 平行對應）</td><td style="padding:9px;text-align:right;border-bottom:1px solid var(--border);color:var(--accent-2)">~65s</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid var(--border);color:var(--warn)">🔴 90%</td><td style="padding:9px;border-bottom:1px solid var(--border)"><strong>領導故事（複雜性）</strong></td><td style="padding:9px;border-bottom:1px solid var(--border)">Q3 縮版「分層授權」8.7x ROAS</td><td style="padding:9px;text-align:right;border-bottom:1px solid var(--border);color:var(--accent-2)">~85s</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid var(--border);color:var(--warn)">🔴 90%</td><td style="padding:9px;border-bottom:1px solid var(--border)"><strong>Why scholarship / why you?</strong></td><td style="padding:9px;border-bottom:1px solid var(--border)">Q6 縮版「兩個 I」+ Nippon alignment + AI Summit</td><td style="padding:9px;text-align:right;border-bottom:1px solid var(--border);color:var(--accent-2)">~85s</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid var(--border);color:var(--accent-warm)">🟡 70%</td><td style="padding:9px;border-bottom:1px solid var(--border)"><strong>成長領域 / 弱點</strong></td><td style="padding:9px;border-bottom:1px solid var(--border)">Q8 縮版（英文坦白 + 跨產業 vs 跨國）</td><td style="padding:9px;text-align:right;border-bottom:1px solid var(--border);color:var(--accent-2)">~85s</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid var(--border);color:var(--accent-warm)">🟡 50%</td><td style="padding:9px;border-bottom:1px solid var(--border)"><strong>跨文化 / cultural fluency</strong></td><td style="padding:9px;border-bottom:1px solid var(--border)">Q5 縮版「內部比外部難」</td><td style="padding:9px;text-align:right;border-bottom:1px solid var(--border);color:var(--accent-2)">~70s</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid var(--border);color:var(--text-dim)">🟢 30%</td><td style="padding:9px;border-bottom:1px solid var(--border)">同儕貢獻</td><td style="padding:9px;border-bottom:1px solid var(--border)">Q7 縮版（條件式回答）</td><td style="padding:9px;text-align:right;border-bottom:1px solid var(--border);color:var(--accent-2)">~65s</td></tr>
+        <tr><td style="padding:9px;border-bottom:1px solid var(--border);color:var(--text-dim)">🟢 20%</td><td style="padding:9px;border-bottom:1px solid var(--border)">登革熱單獨問</td><td style="padding:9px;border-bottom:1px solid var(--border)">Q4 縮版（如果 Q1 沒帶到才會問）</td><td style="padding:9px;text-align:right;border-bottom:1px solid var(--border);color:var(--accent-2)">~75s</td></tr>
+        <tr style="background:rgba(74,222,128,0.08)"><td style="padding:9px;color:var(--good)">🔴 100%</td><td style="padding:9px"><strong>你的反問（最後 5 分鐘）</strong></td><td style="padding:9px">準備 3 題 · 問 2 題</td><td style="padding:9px;text-align:right;color:var(--accent-2)">~5min</td></tr>
+      </tbody>
+    </table>
+
+    <div class="hint" style="background:rgba(249,115,22,0.08);border-left-color:#f97316;margin-top:14px"><span class="label" style="color:#fb923c">⚡ 重點原則 · Front-load</span> 如果只能講 3 題，前 10 分鐘必須出現：<strong>「pragmatic idealist」</strong>（Q1）+ <strong>「Two I's: Impact and Income」</strong>（Q6）+ <strong>「8.7x ROAS / tiered authorization」</strong>（Q3）。Tomoko 對你的記憶會被前 10 分鐘定型。</div>
+  </div>
+
+  <!-- ========== TIGHT VERSIONS ========== -->
+  <h2 id="tight" style="color:#fb923c;border-bottom-color:#f97316">🎬 縮版 60–75 秒 — 面試日念這個</h2>
+
+  <div class="qa-card" style="border-color:#f97316;background:linear-gradient(135deg,rgba(249,115,22,0.06),rgba(30,41,59,0.4))">
+    <p style="margin-top:0;color:#fb923c;font-size:14px;line-height:1.6">⚡ <strong>面試實戰版</strong>：縮減到 60–75 秒、雙語對照。完整版（紫色卡片）只是備用——如果 Tomoko 追問細節再用。<br/><span style="color:var(--zh)">⚡ <strong>For interview use</strong>: 60–75 sec, bilingual side-by-side. Long versions (purple cards) are backup only.</span></p>
+  </div>
+
+  <!-- QUICK JUMP BAR -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin:18px 0 22px 0;padding:16px;background:linear-gradient(135deg,rgba(249,115,22,0.08),rgba(15,23,42,0.6));border:1px solid #f97316;border-radius:12px">
+    <div style="grid-column:1/-1;color:#fb923c;font-size:11.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:2px">⚡ 快速跳轉 · Quick Jump to Answer</div>
+    <a href="#tight-q1" style="display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--bg);color:var(--text-bright);text-decoration:none;padding:10px 8px;border-radius:8px;border:1px solid var(--border);font-size:13px;font-weight:600;transition:all .15s;text-align:center;line-height:1.35;min-height:62px"><span style="color:#fb923c;font-size:15px;font-weight:800">Q1</span><span>自我介紹</span><span style="font-size:10.5px;color:var(--text-dim);font-weight:500">Self-Intro · 65s</span></a>
+    <a href="#tight-q2" style="display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--bg);color:var(--text-bright);text-decoration:none;padding:10px 8px;border-radius:8px;border:1px solid var(--border);font-size:13px;font-weight:600;transition:all .15s;text-align:center;line-height:1.35;min-height:62px"><span style="color:#fb923c;font-size:15px;font-weight:800">Q2</span><span>為何 Minerva</span><span style="font-size:10.5px;color:var(--text-dim);font-weight:500">Why Minerva · 65s</span></a>
+    <a href="#tight-q3" style="display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--bg);color:var(--text-bright);text-decoration:none;padding:10px 8px;border-radius:8px;border:1px solid var(--border);font-size:13px;font-weight:600;transition:all .15s;text-align:center;line-height:1.35;min-height:62px"><span style="color:#fb923c;font-size:15px;font-weight:800">Q3</span><span>領導故事</span><span style="font-size:10.5px;color:var(--text-dim);font-weight:500">Leadership · 85s</span></a>
+    <a href="#tight-q4" style="display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--bg);color:var(--text-bright);text-decoration:none;padding:10px 8px;border-radius:8px;border:1px solid var(--border);font-size:13px;font-weight:600;transition:all .15s;text-align:center;line-height:1.35;min-height:62px"><span style="color:#fb923c;font-size:15px;font-weight:800">Q4</span><span>登革熱</span><span style="font-size:10.5px;color:var(--text-dim);font-weight:500">Dengue · 75s</span></a>
+    <a href="#tight-q5" style="display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--bg);color:var(--text-bright);text-decoration:none;padding:10px 8px;border-radius:8px;border:1px solid var(--border);font-size:13px;font-weight:600;transition:all .15s;text-align:center;line-height:1.35;min-height:62px"><span style="color:#fb923c;font-size:15px;font-weight:800">Q5</span><span>跨文化</span><span style="font-size:10.5px;color:var(--text-dim);font-weight:500">Cross-Cultural · 70s</span></a>
+    <a href="#tight-q6" style="display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--bg);color:var(--text-bright);text-decoration:none;padding:10px 8px;border-radius:8px;border:1px solid var(--border);font-size:13px;font-weight:600;transition:all .15s;text-align:center;line-height:1.35;min-height:62px"><span style="color:#fb923c;font-size:15px;font-weight:800">Q6</span><span>獎學金</span><span style="font-size:10.5px;color:var(--text-dim);font-weight:500">Scholarship · 85s</span></a>
+    <a href="#tight-q7" style="display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--bg);color:var(--text-bright);text-decoration:none;padding:10px 8px;border-radius:8px;border:1px solid var(--border);font-size:13px;font-weight:600;transition:all .15s;text-align:center;line-height:1.35;min-height:62px"><span style="color:#fb923c;font-size:15px;font-weight:800">Q7</span><span>同儕貢獻</span><span style="font-size:10.5px;color:var(--text-dim);font-weight:500">Cohort · 65s</span></a>
+    <a href="#tight-q8" style="display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--bg);color:var(--text-bright);text-decoration:none;padding:10px 8px;border-radius:8px;border:1px solid var(--border);font-size:13px;font-weight:600;transition:all .15s;text-align:center;line-height:1.35;min-height:62px"><span style="color:#fb923c;font-size:15px;font-weight:800">Q8</span><span>成長領域</span><span style="font-size:10.5px;color:var(--text-dim);font-weight:500">Growth · 85s</span></a>
+  </div>
+
+  <!-- Q1 -->
+  <div class="qa-card" id="tight-q1" style="border-left:5px solid #fb923c;padding:0;overflow:hidden">
+    <div style="display:flex;align-items:center;gap:14px;padding:16px 22px;background:linear-gradient(90deg,rgba(249,115,22,0.18) 0%,rgba(30,41,59,0) 100%);border-bottom:1px solid var(--border)">
+      <div style="font-size:34px;font-weight:800;color:#fb923c;line-height:1;flex-shrink:0">Q1</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:17px;font-weight:700;color:var(--text-bright);line-height:1.3">Tell me about yourself</div>
+        <div style="font-size:14px;color:var(--zh);margin-top:3px;line-height:1.3">介紹一下你自己</div>
+      </div>
+      <div style="font-size:12px;color:var(--accent-2);font-weight:700;padding:5px 12px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.3);border-radius:999px;flex-shrink:0;letter-spacing:0.5px">~65s</div>
+    </div>
+    <div style="padding:18px 22px 20px 22px">
+      <div class="answer-block" style="border-left-color:#22d3ee;margin-top:0">
+        <span class="label" style="color:#22d3ee">🎤 ENGLISH · 講這個</span>
+        <p>"Hi, I'm Vincent. I'd describe myself as a <strong>pragmatic idealist</strong> — I take ideal visions and find practical ways to make them happen.</p>
+        <p>I work at <strong>Junyi Academy Foundation</strong> — <strong>Taiwan's largest digital learning platform</strong>. It's free, serving students from elementary through high school, even those without tutors or after-school classes. I lead all external revenue and marketing.</p>
+        <p>Why Minerva, why now — as Junyi grows, my work has become much more complex. Until now, I've grown by <strong>learning by doing</strong>. I want Minerva's <strong>more systematic approach</strong>, so I can keep developing — and help more children.</p>
+        <p>Last year I survived <strong>severe Dengue fever</strong> — I almost didn't make it. <span class="pause">[pause]</span> <em>That clarity is why I'm here.</em>"</p>
+      </div>
+      <div class="answer-block zh" style="border-left-color:var(--zh)">
+        <span class="label" style="color:var(--zh)">📖 中文對照 · 理解結構</span>
+        <p>「嗨，我是 Vincent。我會形容自己是一個<strong>務實的理想主義者</strong>——我擅長把理想的願景，用很實際的方法去實現它。</p>
+        <p>我目前在<strong>均一平台教育基金會</strong>工作——這是<strong>台灣最大的數位學習平台</strong>，完全免費，服務從國小到高中的學生，甚至那些沒有家教、沒有補習班的孩子。我負責所有對外營收與行銷。</p>
+        <p>為什麼是 Minerva、為什麼是現在——隨著均一成長，我的工作變得越來越複雜。到目前為止，我都靠<strong>做中學</strong>摸索。我希望透過 Minerva <strong>更系統化的方法</strong>繼續精進——幫助更多孩子。</p>
+        <p>去年我從<strong>重症登革熱</strong>倖存下來——差一點過不來。<span class="pause">[停頓]</span> <em>那份清晰，就是我來這裡的原因。</em>」</p>
+      </div>
+      <div class="hint"><span class="label">✂️ 跟長版差異</span> 拿掉 Junyi 模仿 Khan Academy 的細節、職涯三世界、NT$50M→113M 數字。<strong>核心元素全部保留</strong>：pragmatic idealist、Junyi 定位、learning by doing、Dengue 收尾。</div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="qa-card" id="tight-q2" style="border-left:5px solid #fb923c;padding:0;overflow:hidden">
+    <div style="display:flex;align-items:center;gap:14px;padding:16px 22px;background:linear-gradient(90deg,rgba(249,115,22,0.18) 0%,rgba(30,41,59,0) 100%);border-bottom:1px solid var(--border)">
+      <div style="font-size:34px;font-weight:800;color:#fb923c;line-height:1;flex-shrink:0">Q2</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:17px;font-weight:700;color:var(--text-bright);line-height:1.3">Why Minerva World Wise?</div>
+        <div style="font-size:14px;color:var(--zh);margin-top:3px;line-height:1.3">為什麼選 Minerva World Wise？</div>
+      </div>
+      <div style="font-size:12px;color:var(--accent-2);font-weight:700;padding:5px 12px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.3);border-radius:999px;flex-shrink:0;letter-spacing:0.5px">~65s</div>
+    </div>
+    <div style="padding:18px 22px 20px 22px">
+      <div class="answer-block" style="border-left-color:#22d3ee;margin-top:0">
+        <span class="label" style="color:#22d3ee">🎤 ENGLISH · 講這個</span>
+        <p>"Working in education in the AI era, we get asked one question constantly: <strong>in the AI era, what should kids actually learn?</strong> My answer — <strong>focus on what doesn't change, the things only humans can do</strong>.</p>
+        <p>In educational innovation, Minerva is <strong>ranked number one in the world</strong>. So I'm genuinely curious — how do students perform so well with <strong>no lectures</strong>?</p>
+        <p>This connects deeply to <strong>Junyi's own vision</strong> — developing students into <strong>lifelong learners</strong>. Our students learn on their own — videos, practice exercises. That's <strong>very close to Minerva's active learning philosophy</strong>. That overlap is what makes me most curious.</p>
+        <p>If I'm accepted, this program will <strong>directly strengthen my work at Junyi</strong> — bring more stable revenue, so we can keep <strong>narrowing educational inequality in Taiwan</strong>."</p>
+      </div>
+      <div class="answer-block zh" style="border-left-color:var(--zh)">
+        <span class="label" style="color:var(--zh)">📖 中文對照 · 理解結構</span>
+        <p>「在 AI 時代做教育工作，我們常被問到一個問題：<strong>AI 時代，孩子到底該學什麼？</strong> 我的回答是——專注在<strong>那些不會變、只有人類才做得到的事</strong>。</p>
+        <p>在教育創新領域，Minerva 是<strong>世界排名第一</strong>的學校。所以我真的很好奇——<strong>完全沒有講授</strong>，Minerva 學生為什麼表現這麼好？</p>
+        <p>這跟<strong>均一自己的願景</strong>深度連結——把學生培養成<strong>終身學習者</strong>。我們的學生靠自己學習——看影片、做習題。這跟 <strong>Minerva 的主動學習哲學非常接近</strong>。這個重疊就是讓我最好奇的地方。</p>
+        <p>如果我被錄取，這個計畫會<strong>直接強化我在均一的工作</strong>——帶來更穩定的收入，讓我們可以繼續<strong>縮小台灣的教育不平等</strong>。」</p>
+      </div>
+      <div class="hint"><span class="label">✂️ 跟長版差異</span> 拿掉「我們在均一被問同一個問題」的鋪陳、「為什麼學生表現好」的延展。<strong>保留</strong>：AI era 哲學開場、Minerva #1、Junyi ↔ active learning 平行對應、educational inequality 收尾。</div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="qa-card" id="tight-q3" style="border-left:5px solid #fb923c;padding:0;overflow:hidden">
+    <div style="display:flex;align-items:center;gap:14px;padding:16px 22px;background:linear-gradient(90deg,rgba(249,115,22,0.18) 0%,rgba(30,41,59,0) 100%);border-bottom:1px solid var(--border)">
+      <div style="font-size:34px;font-weight:800;color:#fb923c;line-height:1;flex-shrink:0">Q3</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:17px;font-weight:700;color:var(--text-bright);line-height:1.3">Tell me about a leadership moment through real complexity</div>
+        <div style="font-size:14px;color:var(--zh);margin-top:3px;line-height:1.3">說一個你領導穿越真實複雜性的時刻</div>
+      </div>
+      <div style="font-size:12px;color:var(--accent-2);font-weight:700;padding:5px 12px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.3);border-radius:999px;flex-shrink:0;letter-spacing:0.5px">~85s</div>
+    </div>
+    <div style="padding:18px 22px 20px 22px">
+      <div class="answer-block" style="border-left-color:#22d3ee;margin-top:0">
+        <span class="label" style="color:#22d3ee">🎤 ENGLISH · 講這個</span>
+        <p>"As I mentioned, I'm a <strong>pragmatic idealist</strong>. When I joined Junyi, our monthly recurring donations were at <strong>NT$1.08 million</strong> — already <strong>Junyi's historical high</strong>. But I noticed we had <strong>no Meta ads budget at all</strong>.</p>
+        <p>I went to our CEO and asked for one. The problem — <strong>I was a new outside hire</strong>. Every single full-time member of my team openly objected. They said it was <strong>too risky</strong>.</p>
+        <p>Rather than push, I worked with an external consultant to design a framework. We proposed: <strong>above 5x ROAS</strong>, I could decide the daily budget on my own. Above a threshold, I'd need CEO approval. Below 5x, the budget automatically comes down. <strong>Maximized authority — without losing control.</strong></p>
+        <p>Once CEO authorized this, <strong>even my opponents accepted it</strong>. Six months later, monthly donations grew from <strong>1.08 million to 1.96 million</strong>, with an <strong>8.7x average ROAS</strong>.</p>
+        <p>What I realized — I'm at my best when I find the <strong>critical leverage points in a resource-constrained environment</strong>, and amplify the outcomes."</p>
+      </div>
+      <div class="answer-block zh" style="border-left-color:var(--zh)">
+        <span class="label" style="color:var(--zh)">📖 中文對照 · 理解結構</span>
+        <p>「如前所述，我是一個<strong>務實的理想主義者</strong>。我剛進均一時，每月定期定額捐款是<strong>新台幣 108 萬</strong>——已經是<strong>均一的歷史新高</strong>。但我發現我們<strong>完全沒有 Meta 廣告預算</strong>。</p>
+        <p>我去找 CEO 要預算。問題是——<strong>我是空降的新主管</strong>。我團隊每個正職員工都公開反對。他們說<strong>太冒險了</strong>。</p>
+        <p>我沒有硬推，而是和外部顧問合作設計一個框架。我們提案：<strong>ROAS 高於 5 倍時</strong>，我可以自己決定每日廣告預算。超過某個門檻就需要 CEO 同意。<strong>ROAS 低於 5 倍時</strong>，預算自動下降。<strong>權限最大化——但不會失控</strong>。</p>
+        <p>CEO 授權之後，<strong>連反對我的人都接受了</strong>。六個月後，月捐款從 <strong>108 萬成長到 196 萬</strong>，廣告平均 <strong>ROAS 是 8.7 倍</strong>。</p>
+        <p>我發現——<strong>我在資源有限的環境下，找出關鍵槓桿點放大成果</strong>，是我最強的地方。」</p>
+      </div>
+      <div class="hint"><span class="label">✂️ 跟長版差異</span> <strong>砍掉</strong>「捐款 500→800 的小實驗」整段（如果 Tomoko 追問「還有什麼其他例子」再講）。三段 ROAS 規則精簡。<strong>保留</strong>：所有關鍵數字、tiered ROAS 框架、leverage points 反思。</div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="qa-card" id="tight-q4" style="border-left:5px solid #fb923c;padding:0;overflow:hidden">
+    <div style="display:flex;align-items:center;gap:14px;padding:16px 22px;background:linear-gradient(90deg,rgba(249,115,22,0.18) 0%,rgba(30,41,59,0) 100%);border-bottom:1px solid var(--border)">
+      <div style="font-size:34px;font-weight:800;color:#fb923c;line-height:1;flex-shrink:0">Q4</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:17px;font-weight:700;color:var(--text-bright);line-height:1.3">Tell me about the Dengue experience</div>
+        <div style="font-size:14px;color:var(--zh);margin-top:3px;line-height:1.3">告訴我登革熱的經驗（如果單獨問才用）</div>
+      </div>
+      <div style="font-size:12px;color:var(--accent-2);font-weight:700;padding:5px 12px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.3);border-radius:999px;flex-shrink:0;letter-spacing:0.5px">~75s</div>
+    </div>
+    <div style="padding:18px 22px 20px 22px">
+      <div class="answer-block" style="border-left-color:#22d3ee;margin-top:0">
+        <span class="label" style="color:#22d3ee">🎤 ENGLISH · 講這個 · 慢、莊重</span>
+        <p>"Lying in that hospital bed with severe Dengue, facing the possibility of dying, I asked myself one question: <strong>if I died today, what would I have left behind for this world?</strong></p>
+        <p>My first thought — and honestly, my <strong>only thought</strong> — was the work I had been doing at Junyi. The financial foundation I had helped build. <span class="pause">[pause 2 seconds]</span> And I realized — <strong>even if my life ended right there, it would have been meaningful.</strong></p>
+        <p>What didn't come to mind — <strong>not fame, not wealth, not status</strong>. Not even a little.</p>
+        <p>That changed what I want to leave behind. Not wealth — <strong>Legacy</strong>. The positive impact that continues even after I'm gone.</p>
+        <p>I made a promise on that bed: <strong>be better to the people who have been good to me</strong>. And I've already started — more generous with my family, more time with my closest friends."</p>
+      </div>
+      <div class="answer-block zh" style="border-left-color:var(--zh)">
+        <span class="label" style="color:var(--zh)">📖 中文對照 · 理解結構</span>
+        <p>「我躺在病床上、得重症登革熱、面對可能會死的時候，我問自己一個問題：<strong>如果我今天就走了，我為這個世界留下了什麼？</strong></p>
+        <p>我的第一個念頭——而且老實說，是<strong>唯一的念頭</strong>——就是我這幾年在均一做的事。我幫助打下的財務基礎。<span class="pause">[停頓 2 秒]</span> 然後我意識到——<strong>就算我的生命在那裡結束，也是有意義的</strong>。</p>
+        <p>那些<strong>沒有</strong>浮上心頭的——<strong>不是名聲、不是財富、不是地位</strong>。一點點都沒有。</p>
+        <p>那改變了我想留下什麼。不是財富——是 <strong>Legacy（遺產）</strong>。我離開後仍持續存在的正面影響。</p>
+        <p>我在那張病床上發誓：<strong>對那些對我好的人更好一點</strong>。而我已經開始做了——對家人更大方，花更多時間陪我最親近的朋友。」</p>
+      </div>
+      <div class="hint"><span class="label">✂️ 跟長版差異</span> 拿掉「我看待世界的看法改變」段。<strong>保留</strong>：唯一念頭、三個排除（fame/wealth/status）、Legacy、家人承諾。<strong>停頓不能省。</strong></div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="qa-card" id="tight-q5" style="border-left:5px solid #fb923c;padding:0;overflow:hidden">
+    <div style="display:flex;align-items:center;gap:14px;padding:16px 22px;background:linear-gradient(90deg,rgba(249,115,22,0.18) 0%,rgba(30,41,59,0) 100%);border-bottom:1px solid var(--border)">
+      <div style="font-size:34px;font-weight:800;color:#fb923c;line-height:1;flex-shrink:0">Q5</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:17px;font-weight:700;color:var(--text-bright);line-height:1.3">Tell me about crossing a cultural / values divide</div>
+        <div style="font-size:14px;color:var(--zh);margin-top:3px;line-height:1.3">說一個你跨越文化或價值落差的經驗</div>
+      </div>
+      <div style="font-size:12px;color:var(--accent-2);font-weight:700;padding:5px 12px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.3);border-radius:999px;flex-shrink:0;letter-spacing:0.5px">~70s</div>
+    </div>
+    <div style="padding:18px 22px 20px 22px">
+      <div class="answer-block" style="border-left-color:#22d3ee;margin-top:0">
+        <span class="label" style="color:#22d3ee">🎤 ENGLISH · 講這個</span>
+        <p>"My work is constantly about leading across people who don't always speak the same language. And honestly — <strong>internal is harder than external</strong>.</p>
+        <p>At Junyi, my department is the <strong>only one</strong> carrying revenue KPIs. I have <strong>no formal authority</strong> over other departments. Externally, if a partner's values don't align, I can walk away. <strong>Internally, I can't.</strong></p>
+        <p>So my approach is: <strong>build trust</strong> with the most open partners first. <strong>Translate</strong> their work into language corporate funders can fund. <strong>Support</strong> them when they need to quantify impact. And critically — <strong>give them the credit</strong> when we win.</p>
+        <p>Underneath this, I hold one belief: we all came to Junyi for the same vision — <strong>every child, no matter their background, has the chance to become a lifelong learner</strong>. <em>That's the cultural fluency I practice every week.</em>"</p>
+      </div>
+      <div class="answer-block zh" style="border-left-color:var(--zh)">
+        <span class="label" style="color:var(--zh)">📖 中文對照 · 理解結構</span>
+        <p>「我的工作每天都在面對『不總是說同一種語言』的人。但老實說——<strong>對內溝通比對外溝通更困難</strong>。</p>
+        <p>在均一，我的部門是<strong>唯一</strong>扛營收 KPI 的。我<strong>對其他部門沒有正式權力</strong>。對外，如果合作對象價值觀不合，我可以走開。<strong>對內，我走不開</strong>。</p>
+        <p>所以我的做法是：<strong>先和最開放的部門夥伴建立信任</strong>。把他們做的事情<strong>翻譯</strong>成企業出資者願意支持的語言。在他們需要量化影響力時<strong>提供行銷協助</strong>。而最關鍵的——<strong>贏的時候把功勞給他們</strong>。</p>
+        <p>底層我有一個信念：我們在均一工作都是為了同一個願景——<strong>讓每個孩子，不管出身，都有機會成為終身學習者</strong>。<em>這就是我每週都在實踐的文化流暢度。</em>」</p>
+      </div>
+      <div class="hint"><span class="label">✂️ 跟長版差異</span> 簡化「為什麼內部難」的論證、四步驟濃縮成一段。<strong>保留</strong>：「Internal is harder than external」核心 insight、四步驟方法論、Junyi 願景引用、mic drop 收尾。</div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="qa-card" id="tight-q6" style="border-left:5px solid #fb923c;padding:0;overflow:hidden">
+    <div style="display:flex;align-items:center;gap:14px;padding:16px 22px;background:linear-gradient(90deg,rgba(249,115,22,0.18) 0%,rgba(30,41,59,0) 100%);border-bottom:1px solid var(--border)">
+      <div style="font-size:34px;font-weight:800;color:#fb923c;line-height:1;flex-shrink:0">Q6</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:17px;font-weight:700;color:var(--text-bright);line-height:1.3">Why should the Nippon Foundation invest in you?</div>
+        <div style="font-size:14px;color:var(--zh);margin-top:3px;line-height:1.3">為什麼日本財團應該投資你？</div>
+      </div>
+      <div style="font-size:12px;color:var(--accent-2);font-weight:700;padding:5px 12px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.3);border-radius:999px;flex-shrink:0;letter-spacing:0.5px">~85s</div>
+    </div>
+    <div style="padding:18px 22px 20px 22px">
+      <div class="answer-block" style="border-left-color:#22d3ee;margin-top:0">
+        <span class="label" style="color:#22d3ee">🎤 ENGLISH · 講這個</span>
+        <p>"I'm a <strong>pragmatic idealist</strong>. More specifically — I'm someone who translates between for-profit and non-profit, and creates the <strong>'two I's' — Impact and Income</strong> — at the same time.</p>
+        <p>This combination is rare. Most non-profit leaders speak only mission language. I came from <strong>global brand agencies and financial services</strong> before Junyi, so I can write proposals that speak ROI to corporate funders, and speak mission inside our team.</p>
+        <p>The Nippon Foundation's belief — that <strong>'no single organization can solve social problems alone'</strong> — is not just aligned with my work. <strong>It IS my work.</strong> This year, I'm serving as <strong>General Coordinator of the 2026 AI Talent Summit</strong>, bringing together <strong>Taiwan's President Lai</strong> and <strong>TSMC's Senior Vice President Lora Ho</strong>.</p>
+        <p>If I'm given this scholarship, the investment doesn't stop at me. <strong>It compounds.</strong> Minerva → me → my team → <strong>Junyi's 5 million learners</strong> → ultimately, <strong>rural kids, economically disadvantaged kids, kids whose families can't afford cram schools</strong>.</p>
+        <p><em>That's why this investment returns more to the world than it costs.</em>"</p>
+      </div>
+      <div class="answer-block zh" style="border-left-color:var(--zh)">
+        <span class="label" style="color:var(--zh)">📖 中文對照 · 理解結構</span>
+        <p>「我是一個<strong>務實的理想主義者</strong>。更具體一點——我是一個能在營利和非營利兩種語言間翻譯的人。我把它們稱為<strong>『兩個 I』——Impact（影響力）和 Income（營收）</strong>——而且我同時創造這兩件事。</p>
+        <p>這個組合在非營利圈裡很罕見。多數非營利領導者只會說使命的語言。我在進均一前，<strong>做過全球品牌代理商、也做過金融服務</strong>——所以我能寫提案、用 ROI 的語言對企業出資者（如台積電）溝通，回到團隊則用使命的語言。</p>
+        <p>日本財團的信念——<strong>『沒有任何單一組織能獨自解決社會問題』</strong>——不只是和我的工作對齊。<strong>這就是我的工作</strong>。今年我擔任 <strong>2026 AI 人才高峰會總召集人</strong>，邀請<strong>台灣賴總統</strong>和<strong>台積電資深副總 Lora 何麗梅</strong>到場。</p>
+        <p>如果獎學金給我，這份投資不會停在我身上。<strong>它會複利</strong>。Minerva → 我 → 我的團隊 → <strong>均一的 500 萬學習者</strong> → 最終是<strong>偏鄉的孩子、經濟弱勢的孩子、家裡沒錢補習的孩子</strong>。</p>
+        <p><em>這就是為什麼這份投資對世界的回報，遠遠超過它的成本。</em>」</p>
+      </div>
+      <div class="hint"><span class="label">✂️ 跟長版差異</span> 拿掉「co-organized with two partner companies」、「advocate for AI talent development」等細節。<strong>保留</strong>：兩個 I、職涯三段、Nippon belief 引用、賴總統 + Lora Ho、五段影響鏈、mic drop。</div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="qa-card" id="tight-q7" style="border-left:5px solid #fb923c;padding:0;overflow:hidden">
+    <div style="display:flex;align-items:center;gap:14px;padding:16px 22px;background:linear-gradient(90deg,rgba(249,115,22,0.18) 0%,rgba(30,41,59,0) 100%);border-bottom:1px solid var(--border)">
+      <div style="font-size:34px;font-weight:800;color:#fb923c;line-height:1;flex-shrink:0">Q7</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:17px;font-weight:700;color:var(--text-bright);line-height:1.3">What will you bring to the cohort?</div>
+        <div style="font-size:14px;color:var(--zh);margin-top:3px;line-height:1.3">你會為同儕帶來什麼？</div>
+      </div>
+      <div style="font-size:12px;color:var(--accent-2);font-weight:700;padding:5px 12px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.3);border-radius:999px;flex-shrink:0;letter-spacing:0.5px">~65s</div>
+    </div>
+    <div style="padding:18px 22px 20px 22px">
+      <div class="answer-block" style="border-left-color:#22d3ee;margin-top:0">
+        <span class="label" style="color:#22d3ee">🎤 ENGLISH · 講這個</span>
+        <p>"Honestly — that's a question I can only answer <strong>conditionally</strong>, because I don't yet know who else will be in the cohort.</p>
+        <p>My guess is the cohort will lean for-profit and public sector, with fewer non-profit voices like mine. <strong>If that's true</strong>, here's what I bring.</p>
+        <p>First — a <strong>dual-lens view</strong>. I've worked in both for-profit and non-profit, so I can show how the same problem looks completely different through a <strong>mission angle versus a P&L angle</strong>.</p>
+        <p>Second — <strong>pragmatic idealism</strong>. I know how to be very practical inside very idealistic environments.</p>
+        <p>Third — <strong>how a non-profit actually builds power</strong> through partnerships with government, companies, and schools. Most for-profit leaders haven't seen that back-end.</p>
+        <p><em>That's where I think I can contribute something distinct.</em>"</p>
+      </div>
+      <div class="answer-block zh" style="border-left-color:var(--zh)">
+        <span class="label" style="color:var(--zh)">📖 中文對照 · 理解結構</span>
+        <p>「老實說——這個問題我<strong>只能有條件式地回答</strong>，因為我還不知道其他學員是誰。</p>
+        <p>我的猜測是同儕會偏向營利和公部門，像我這樣非營利的聲音較少。<strong>如果是這樣</strong>，我能帶來這些：</p>
+        <p>第一——<strong>雙重視角</strong>。我同時做過營利和非營利，所以我能展現同一個案例從<strong>使命角度 vs P&L（損益）角度</strong>看，會看到完全不同的東西。</p>
+        <p>第二——<strong>務實的理想主義</strong>。我懂得如何在很理想的環境中做非常實際的事。</p>
+        <p>第三——<strong>非營利組織如何真正建立實力</strong>：透過跟政府、企業、學校的合作。多數營利領導者沒看過這個後台。</p>
+        <p><em>這就是我覺得我可以貢獻的、與其他人不同的地方。</em>」</p>
+      </div>
+      <div class="hint"><span class="label">✂️ 跟長版差異</span> 簡化每一點的鋪陳。<strong>保留</strong>：conditional 開場、三件貢獻、pragmatic idealism 三度出現。</div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="qa-card" id="tight-q8" style="border-left:5px solid #fb923c;padding:0;overflow:hidden">
+    <div style="display:flex;align-items:center;gap:14px;padding:16px 22px;background:linear-gradient(90deg,rgba(249,115,22,0.18) 0%,rgba(30,41,59,0) 100%);border-bottom:1px solid var(--border)">
+      <div style="font-size:34px;font-weight:800;color:#fb923c;line-height:1;flex-shrink:0">Q8</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:17px;font-weight:700;color:var(--text-bright);line-height:1.3">What growth area do you hope Minerva will help you with?</div>
+        <div style="font-size:14px;color:var(--zh);margin-top:3px;line-height:1.3">你希望 Minerva 幫你成長什麼？</div>
+      </div>
+      <div style="font-size:12px;color:var(--accent-2);font-weight:700;padding:5px 12px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.3);border-radius:999px;flex-shrink:0;letter-spacing:0.5px">~85s</div>
+    </div>
+    <div style="padding:18px 22px 20px 22px">
+      <div class="answer-block" style="border-left-color:#22d3ee;margin-top:0">
+        <span class="label" style="color:#22d3ee">🎤 ENGLISH · 講這個</span>
+        <p>"Two things I want to be very direct about.</p>
+        <p>The <strong>first</strong> — my English. <strong>My spoken English is not at the level of my thinking.</strong> I'm not going to hide that. In Minerva's Forum, where every session is fast and discussion-driven, that's a real stretch. That's why I want to take the <strong>Professional English Discussion Bootcamp in June</strong>, and treat every Tuesday session as <strong>deliberate practice</strong>.</p>
+        <p>The <strong>second</strong> — my experience so far is across industries and across cultures, <strong>but it's all still inside Taiwan</strong>. I've crossed sector lines, but <strong>I haven't led across truly different national contexts</strong> — different time zones, different decision-making cultures.</p>
+        <p>If Junyi is going to scale beyond Taiwan, I need to learn this. That's why <strong>Course 3 on global teams</strong>, and especially the <strong>Accelerator</strong>, is exactly the practice I cannot get anywhere else.</p>
+        <p>What I hope to walk away with — a wider perspective, real friendships with senior leaders across Asia, and the ability to <strong>lead the next chapter with confidence grounded in practice, not just instinct</strong>."</p>
+      </div>
+      <div class="answer-block zh" style="border-left-color:var(--zh)">
+        <span class="label" style="color:var(--zh)">📖 中文對照 · 理解結構</span>
+        <p>「有兩件事我想直接面對。</p>
+        <p><strong>第一</strong>——我的英文。<strong>我口說的速度跟不上我思考的速度</strong>。我不打算隱瞞。在 Minerva 的 Forum 上、每堂課都是快節奏的討論——這對我是真的挑戰。所以我想參加六月的 <strong>Professional English Discussion Bootcamp</strong>，把每個週二的課當成<strong>刻意練習（deliberate practice）</strong>。</p>
+        <p><strong>第二</strong>——我目前的經驗是跨產業、跨文化，<strong>但全部都在台灣境內</strong>。我跨越過產業邊界，但<strong>我還沒有真正在跨國脈絡下領導過</strong>——不同時區、不同決策文化。</p>
+        <p>如果均一要走出台灣，我必須學會這個。所以 <strong>Course 3（全球團隊溝通）</strong>，以及<strong>實體加速器</strong>，正是我在別處得不到的練習。</p>
+        <p>我希望帶走的——更<strong>寬廣的視野</strong>、和<strong>亞洲資深領導者的真實情誼</strong>，以及<strong>帶領均一下個篇章的能力——那份建立在實踐之上、而非僅靠直覺的自信</strong>。」</p>
+      </div>
+      <div class="hint"><span class="label">✂️ 跟長版差異</span> 簡化兩段的鋪陳細節。<strong>保留</strong>：兩段結構、「不打算隱瞞」誠實、English Bootcamp + deliberate practice、跨產業 vs 跨國精準區分、mic drop。</div>
+    </div>
+  </div>
+
+  <!-- ========== TOP CHEAT SHEET ========== -->
+  <div class="cheat-sheet" id="cheat">
+    <h3>⚡ Top-of-Mind · 最關鍵的 5 件事 (永遠記得)</h3>
+    <ul style="line-height:1.7">
+      <li style="margin-bottom:14px"><strong>1. Your one-line identity / 一句話定位：</strong><br/><em style="color:var(--en)">"I lead sustainability and fundraising at Junyi Academy — Taiwan's largest education non-profit, reaching over 5 million learners."</em><br/><span style="color:var(--zh);font-size:13.5px">「我在均一平台領導永續與募款工作——這是台灣最大的教育非營利，服務超過 500 萬學習者。」</span></li>
+      <li style="margin-bottom:14px"><strong>2. Your "why now" / 為什麼是現在：</strong><br/><em style="color:var(--en)">"After surviving Dengue fever last year, I asked myself what I had actually done for the world. That clarity is why I'm here — but raw passion isn't enough to scale globally."</em><br/><span style="color:var(--zh);font-size:13.5px">「去年從登革熱倖存之後，我問自己到底為這個世界做了什麼。那份清晰就是我來這裡的原因——但光靠熱情不足以把影響力擴大到全球規模。」</span></li>
+      <li style="margin-bottom:14px"><strong>3. The exact two modules to name-drop / 必提兩個模組：</strong><br/><em style="color:var(--en)">"Leadership in Complexity"</em> + <em style="color:var(--en)">"Cultural Fluency"</em> — they map directly to my two biggest gaps.<br/><span style="color:var(--zh);font-size:13.5px">「複雜性領導力」+「文化流暢度」——它們正好對應我兩個最大的缺口。</span></li>
+      <li style="margin-bottom:14px"><strong>4. Your social multiplier / 社會乘數：</strong><br/>Scholarship → me → Junyi → 5M+ learners → under-resourced kids in Taiwan.<br/><em style="color:var(--en)">"This is an investment with a high social multiplier."</em><br/><span style="color:var(--zh);font-size:13.5px">獎學金 → 我 → 均一 → 500 萬+ 學習者 → 台灣資源不足的孩子。「這是一筆社會乘數極高的投資。」</span></li>
+      <li><strong>5. Active learning fit / 為何適合無講授模式：</strong><br/><em style="color:var(--en)">"I learn by doing. The 8.7x ROAS, the 226% MRR growth — none of that came from lectures. It came from structured experiments. Minerva's no-lecture model is how I already operate."</em><br/><span style="color:var(--zh);font-size:13.5px">「我從做中學。8.7 倍 ROAS、226% 月經常性收入成長——這些都不是從講授來的，是從結構化的實驗來的。Minerva 無講授的模式正是我已經在運作的方式。」</span></li>
+    </ul>
+  </div>
+
+  <!-- ========== MY AUTHENTIC ANSWERS ========== -->
+  <h2 id="myanswers" style="color:#c4b5fd;border-bottom-color:#8b5cf6">🎙 我的真實回答 — 用我自己的話</h2>
+
+  <div class="qa-card" style="border-color:#8b5cf6;background:linear-gradient(135deg,rgba(139,92,246,0.06),rgba(30,41,59,1))">
+    <p style="margin-top:0;color:#c4b5fd;font-size:14px">這個區塊是<strong>你用中文親口回答後我翻譯的版本</strong>。比預設腳本更自然、更像你。明天優先用這裡的版本。</p>
+  </div>
+
+  <div class="qa-card" style="border-left:4px solid #8b5cf6">
+    <span class="q-tag" style="background:rgba(139,92,246,0.2);color:#c4b5fd">My Answer · Q1 · Self-Intro</span>
+    <div class="q-en">Tell me about yourself. Walk me through who you are, what you do, and what brought you to this point in your career.</div>
+    <div class="q-zh">介紹一下你自己——你是誰、做什麼、是什麼帶你來到職涯的這個時刻？</div>
+
+    <div class="answer-block" style="border-left-color:#a78bfa">
+      <span class="label" style="color:#a78bfa">🇹🇼 我的中文原話（保留自己的語氣）</span>
+      <p>你好，我是 Vincent。我是一個<strong>務實的理想主義者</strong>，擅長在理想之下，用很務實的方法達成理想。</p>
+      <p>我現在在<strong>均一平台教育基金會</strong>工作，這是全臺灣最大的數位學習平台，免費提供國小到高中的學生使用。他們可以透過看影片、做習題學習——即使沒有家教或補習班，也可以學得會。我在這個組織負責對外的所有收入以及行銷。</p>
+      <p>之所以會選擇這條路，是因為我希望透過我的<strong>行銷專業，能夠幫助更多的人</strong>。</p>
+      <p>為什麼現在來 Minerva？那是因為隨著組織日漸擴大，我需要處理的事情愈來愈複雜。我過去的成長是靠自己<strong>做中學摸索</strong>而來的，但我希望透過 Minerva <strong>更有系統化的學習方法</strong>，提升自己的能力，讓我可以幫助更多人。</p>
+      <p>我去年得到登革熱重症差一點過世，那之後我更加堅定了我現在的角色。</p>
+    </div>
+
+    <div class="answer-block" style="border-left-color:#22d3ee">
+      <span class="label" style="color:#22d3ee">🎤 英文版（明天念這個 · 約 85–95 秒）</span>
+      <p>"Hi, I'm Vincent. I'd describe myself as a <strong>pragmatic idealist</strong> — I'm at my best when I take an ideal vision and find <strong>very practical ways</strong> to make it happen.</p>
+      <p>I currently work at <strong>Junyi Academy Foundation</strong>. It's <strong>the largest digital learning platform in Taiwan</strong> — completely free, serving students from elementary school through high school. Kids can learn from our videos and practice exercises on their own — even when they have no tutor and no after-school class. In this organization, I lead all external revenue and marketing.</p>
+      <p>I chose this path because <strong>I wanted to use my marketing skills to help more people</strong>.</p>
+      <p>As for why Minerva, and why now — it's because as our organization grows, the situations I face are becoming much more complex. Until now, I've grown by <strong>figuring things out on my own — learning by doing</strong>. But I want Minerva's <strong>more systematic approach</strong>, so I can keep developing, and help more people.</p>
+      <p>And last year — I survived a severe case of Dengue fever. I almost didn't make it. <span class="pause">[pause 2 seconds]</span> That experience made me even more certain about this path."</p>
+    </div>
+
+    <div class="hint"><span class="label">🔤 發音提示</span> <strong>pragmatic idealist</strong> = prag-MAT-ic / eye-DEE-uh-list · <strong>systematic</strong> = sis-tuh-MAT-ic · <strong>Dengue</strong> = DEN-gay（或 DEN-gee）</div>
+
+    <div class="talking-points">
+      <span class="label">✅ 為什麼這個答案有效</span>
+      <ul>
+        <li><strong>"Pragmatic idealist"</strong> — 你的口頭簽名。後面被問到「描述你自己」可以再用一次。</li>
+        <li><strong>"Learning by doing"</strong> — 無意間講了 Minerva active learning 的核心詞，這會讓 Tomoko 內心打勾。</li>
+        <li><strong>登革熱放最後</strong>當收尾，不是開場——情緒成熟、不賣慘。</li>
+        <li><strong>沒有炫耀數字</strong>，反而讓「想幫更多人」聽起來更真誠。</li>
+      </ul>
+    </div>
+
+    <div class="hint" style="background:rgba(167,139,250,0.08);border-left-color:#a78bfa"><span class="label" style="color:#a78bfa">💡 可選加分句（若想要更具體）</span> 在介紹 Junyi 那段可加一句：<em>"We reach over 5 million learners."</em>（pronouncing: "we reach OH-ver five MIL-lion LEAR-ners"）— 但不加也很好。</div>
+  </div>
+
+  <div class="qa-card" style="border-left:4px solid #8b5cf6">
+    <span class="q-tag" style="background:rgba(139,92,246,0.2);color:#c4b5fd">My Answer · Q2 · Why World Wise</span>
+    <div class="q-en">What about World Wise drew you in? Was there a particular moment or part of the program description that made you think — 'this is exactly what I need'?</div>
+    <div class="q-zh">World Wise 哪裡吸引你？有沒有某個特定的時刻或計畫描述裡的某個部分，讓你想：「這就是我需要的」？</div>
+
+    <div class="answer-block" style="border-left-color:#a78bfa">
+      <span class="label" style="color:#a78bfa">🇹🇼 我的中文原話</span>
+      <p>在一個教育非營利組織工作，尤其是在這個 AI 時代，我們常常會被大家問：<strong>AI 時代，到底小孩要學習什麼？我們要怎麼學習？</strong></p>
+      <p>對此，我想說：<strong>AI 時代每天都在變動，所以我們更需要專注於學習那些不會改變的事物，而且只有人類才能夠做到的事物。</strong>這才是在 AI 時代中我認為最重要的生存方法。</p>
+      <p>在教育創新的領域，<strong>Minerva 大學是世界排名第一</strong>。因此，我非常好奇、期待能夠透過這次的計畫更了解，<strong>為什麼在無講授的教學方法之下，Minerva 的學生學習表現這麼好</strong>。這也和均一平台（也就是我工作的地方）期待學生成為<strong>終身學習者</strong>的願景很像。因為在均一平台的學生可以透過自己自我學習——看均一平台上面的影片和習題，就能夠學習，其實和 Minerva 強調的 <strong>active learning</strong> 很像。這也是讓我很好奇的地方。</p>
+      <p>如果可以加入這個計畫學習，我覺得可以對於我在均一平台教育基金會的工作很有幫助，也能夠讓我更好地幫助到更多使用均一平台的學生，幫均一平台教育基金會帶來更穩定的財務收入，讓我們繼續有資源，可以做好的事情，<strong>改善教育不平等</strong>。</p>
+    </div>
+
+    <div class="answer-block" style="border-left-color:#22d3ee">
+      <span class="label" style="color:#22d3ee">🎤 英文版（明天念這個 · 約 90–100 秒）</span>
+      <p>"Working at an education non-profit in this AI era, we get asked one question all the time: <strong>In the age of AI, what should kids actually learn? How should they learn?</strong></p>
+      <p>My answer is this: AI is changing every day. So what matters more is focusing on what <strong>doesn't change</strong> — the things only humans can do. That, to me, is how you survive — and thrive — in the AI era.</p>
+      <p>In educational innovation, Minerva is <strong>ranked number one in the world</strong>. So I'm <strong>genuinely curious</strong> — how is it that, with no traditional lectures, Minerva students perform so well?</p>
+      <p>This connects deeply to <strong>Junyi's own vision</strong>. We aim to develop students into <strong>lifelong learners</strong>. Our students learn on their own — they watch videos, do practice exercises, master the material themselves. That's <strong>very close to Minerva's active learning philosophy</strong>. That overlap is what makes me most curious.</p>
+      <p>If I'm accepted, this program will <strong>directly strengthen my work at Junyi</strong>. It will help me better serve our students, and bring more stable revenue to the foundation — so we can keep doing good work, and keep <strong>narrowing educational inequality in Taiwan</strong>."</p>
+    </div>
+
+    <div class="hint" style="background:rgba(167,139,250,0.08);border-left-color:#a78bfa"><span class="label" style="color:#a78bfa">💡 Optional 加分句（插在「That overlap is what makes me most curious」之後）</span> <em>"Beyond active learning, two specific modules — <strong>'Leadership in Complexity'</strong> and <strong>'Communication for Leading High-Performing Global Teams'</strong> — directly map to the gaps I face at Junyi every day."</em></div>
+
+    <div class="hint"><span class="label">🔤 發音</span> <strong>lifelong learners</strong> = LIFE-long LEAR-ners · <strong>active learning philosophy</strong> = AC-tive LEAR-ning fi-LO-so-fee · <strong>educational inequality</strong> = e-du-CA-tion-al in-e-QUA-li-ty</div>
+
+    <div class="talking-points">
+      <span class="label">✅ 為什麼這個答案 powerful</span>
+      <ul>
+        <li><strong>"AI 時代孩子該學什麼？"</strong> 開場——把面試 framing 從「你選我們」翻成「我們在回答同一個時代問題」</li>
+        <li><strong>"Focus on what doesn't change, only humans can do"</strong>——直接命中 Minerva 教學哲學核心</li>
+        <li><strong>Junyi 學生自學 = Minerva active learning</strong>——你已經活在這個哲學裡，不是想學它</li>
+        <li><strong>"Genuinely curious"</strong> 比「我想學東西」真誠 100 倍</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card" style="border-left:4px solid #8b5cf6">
+    <span class="q-tag" style="background:rgba(139,92,246,0.2);color:#c4b5fd">My Answer · Q3 · Leadership Through Complexity</span>
+    <div class="q-en">Can you walk me through a specific moment in the last year or two where you had to lead through real complexity? Something where the outcome could have gone either way?</div>
+    <div class="q-zh">能不能舉一個具體的時刻——過去一兩年內——你必須帶領團隊穿越真正的複雜性？某個結果可能往兩個方向發展的時刻？</div>
+
+    <div class="answer-block" style="border-left-color:#a78bfa">
+      <span class="label" style="color:#a78bfa">🇹🇼 我的中文原話</span>
+      <p>我是一個<strong>務實的理想主義者</strong>。在我剛到職時，就要負責向大眾募款。當時每月定期定額捐款有 <strong>108 萬台幣</strong>，已經是均一成立以來最高的金額。我發現均一沒有 Meta 廣告預算，所以我就向 CEO 爭取預算來投放廣告。</p>
+      <p>一開始我身為<strong>空降主管</strong>提出這個想法，我團隊內正職都舉手反對我，說我這樣太冒險。後來靠著跟外部顧問合作，我在會議上和 CEO 達成共識：在廣告 <strong>ROAS 平均 5 倍以上</strong>時，我可以自行決定每天的廣告預算；但超過某個每日預算上限，我需要得到 CEO 同意才可以加碼；而當 <strong>ROAS 低於 5 倍</strong>時，則會減少預算。確保廣告預算在我手上可以最大化，又不至於失去控制。</p>
+      <p>有了 CEO 授權的廣告加減碼原則後，原本反對我的人才接受。過了半年後，我把每月定期定額捐款的水位，從 <strong>108 萬成長到 196 萬</strong>，而且這半年廣告的總體 ROAS 平均是 <strong>8.7 倍</strong>。</p>
+      <p>其中我做過<strong>最有趣的募款成長行銷策略</strong>是，把捐款頁面上可以讓人點選的最低捐款金額，從每月 500 元改成 800 元——結果讓平均定期定額捐款金額提升很多，幾乎零成本提高客單價，而且捐款者總量也有提升。我也發現我很擅長<strong>在資源有限的情況下，找出關鍵的槓桿點放大成果</strong>。</p>
+    </div>
+
+    <div class="answer-block" style="border-left-color:#22d3ee">
+      <span class="label" style="color:#22d3ee">🎤 英文版（約 115–120 秒）</span>
+      <p>"As I mentioned earlier, I'm a <strong>pragmatic idealist</strong>. When I first joined Junyi, I was responsible for public fundraising. At that time, monthly recurring donations were at <strong>NT$1.08 million</strong> — already the <strong>highest in Junyi's history</strong>.</p>
+      <p>But I noticed something: Junyi had <strong>no Meta ads budget at all</strong>. So I went to our CEO and asked for one.</p>
+      <p>Here was the problem — <strong>I was a new outside hire</strong>. When I proposed this strategy, every single full-time member of my team openly objected. They said it was <strong>too risky</strong>.</p>
+      <p>Rather than push harder, I worked with an <strong>external consultant</strong> to design a framework — and brought it to the CEO. The proposal was: when ROAS was averaging <strong>above 5x</strong>, I could decide the daily ad budget on my own. Above a certain daily threshold, I'd need the CEO's approval to scale further. And when ROAS dropped <strong>below 5x</strong>, the budget would automatically come down.</p>
+      <p>This way, my budget authority was <strong>maximized — without losing control</strong>. Once the CEO authorized this principle, <strong>even my opponents accepted it</strong>.</p>
+      <p>Six months later, monthly recurring donations had grown from <strong>1.08 million to 1.96 million</strong>. The overall ROAS for that half-year averaged <strong>8.7x</strong>.</p>
+      <p>The most interesting experiment I ran was actually small: I changed the lowest selectable donation amount on our page — from <strong>NT$500 to NT$800 per month</strong>. Almost zero cost. The result — average donation size jumped, <strong>and</strong> the total number of donors went up.</p>
+      <p>That's when I realized — I'm at my best when I can find the <strong>critical leverage points</strong> in a <strong>resource-constrained environment</strong>, and amplify the outcomes."</p>
+    </div>
+
+    <div class="hint"><span class="label">🔤 三個發音重點</span> <strong>ROAS</strong> = ROW-az（一個音、不要念 R-O-A-S）· <strong>leverage points</strong> = LEH-ver-idge POINTS · <strong>resource-constrained</strong> = RE-source con-STRAINED</div>
+
+    <div class="hint" style="background:rgba(167,139,250,0.08);border-left-color:#a78bfa"><span class="label" style="color:#a78bfa">⏱ 如果覺得太長</span> 可省略「捐款金額 500→800」+「leverage points」最後兩段，省 25 秒。但<strong>強烈建議保留</strong>——那是這故事的差異化關鍵。</div>
+
+    <div class="talking-points">
+      <span class="label">✅ 為什麼這個答案 powerful</span>
+      <ul>
+        <li><strong>回頭引用「pragmatic idealist」</strong>——語言一致性，Tomoko 心裡打勾</li>
+        <li><strong>「正職都舉手反對」</strong>——具體畫面感，比抽象描述強 10 倍</li>
+        <li><strong>三段 ROAS 規則</strong>——不是空話，是真正的風險管理設計，這就是 Minerva 想要的思考精準度</li>
+        <li><strong>「leverage points in resource-constrained environments」</strong>——這個收尾把 ONE-TIME 成就變成 REPEATABLE 能力</li>
+        <li><strong>核心訊息：「我不靠權威靠系統」</strong>——這正是 Minerva「橫向領導 + 證據導向」的核心信念</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card" style="border-left:4px solid #8b5cf6">
+    <span class="q-tag" style="background:rgba(139,92,246,0.2);color:#c4b5fd">My Answer · Q4 · The Dengue Experience</span>
+    <div class="q-en">You said surviving Dengue made you more certain about your path. What was that experience actually like for you, and what shifted in how you see your work, or your life?</div>
+    <div class="q-zh">登革熱倖存讓你對現在的角色更加堅定。那個經歷實際上是什麼感受？你看待工作、或看待人生的方式，有什麼東西改變了？</div>
+
+    <div class="answer-block" style="border-left-color:#a78bfa">
+      <span class="label" style="color:#a78bfa">🇹🇼 我的中文原話</span>
+      <p>因為登革熱重症住院在床上面臨生死之際，我只問自己：<strong>如果我今天就過世了，我到底為這個世界留下了什麼？</strong></p>
+      <p>我<strong>第一個念頭，也是唯一的念頭</strong>，就是想到這幾年我在均一平台教育基金會工作，為組織打下了很穩健的財務底氣。這件事情讓我覺得，<strong>我的人生即使在這裡劃上終點，也是非常有成就感的一件事情</strong>。</p>
+      <p>除此之外，所有的<strong>名聲、財富、社會地位</strong>這些，我完全<strong>一點點都沒有想到</strong>。</p>
+      <p>經過生死交關的經驗，讓我更了解我這一生到底想要留下什麼。我想不是多少財富，而是<strong>我能為這個世界帶來多少正面的遺產（Legacy）</strong>——即使在我不在這個世界之後。</p>
+      <p>我看待世界的看法也改變了。我發現，這個世界<strong>真正重要的事情跟真正重要的人，其實並不多</strong>。</p>
+      <p>我發誓，我康復之後要對那些對我好的人更好一點。而<strong>我現在已經這麼做了</strong>。我對我的家人比以前更加大方，也花更多時間陪伴我的家人和最好的朋友。</p>
+    </div>
+
+    <div class="answer-block" style="border-left-color:#22d3ee">
+      <span class="label" style="color:#22d3ee">🎤 英文版（約 95–110 秒 · 慢、莊重、用停頓）</span>
+      <p>"Lying in that hospital bed with severe Dengue, facing the possibility of dying, I asked myself one question: <strong>If I died today, what would I have left behind for this world?</strong></p>
+      <p>My first thought — and honestly, my <strong>only thought</strong> — was the work I had been doing at Junyi. The financial foundation I had helped build for the organization. <span class="pause">[pause 2 seconds]</span> And I realized — <strong>even if my life ended right there, it would have been meaningful.</strong></p>
+      <p>What's interesting is what <strong>didn't</strong> come to mind. <strong>Not fame. Not wealth. Not status.</strong> Not even a little.</p>
+      <p>That experience changed how I think about my own life. What I want to leave behind isn't wealth — it's <strong>Legacy</strong>. The positive impact I can have on this world, that continues even after I'm gone.</p>
+      <p>It also changed how I see the world. I realized — <strong>the truly important things, and the truly important people, are actually very few.</strong></p>
+      <p>I made a promise on that bed: when I recover, I will be better to the people who have been good to me. <span class="pause">[pause 1 second]</span> And I've already started. I'm more generous with my family now. I spend more time with my family and my closest friends."</p>
+    </div>
+
+    <div class="hint" style="background:rgba(248,113,113,0.06);border-left-color:#f87171"><span class="label" style="color:#f87171">⏸ 最關鍵的不是字，是停頓</span> 兩個 [pause] <strong>一定要真的停</strong>。沉默會做工作，不是你的字。<strong>特別是 "it would have been meaningful" 後面停 2 秒</strong>——讓那句話 land。</div>
+
+    <div class="hint"><span class="label">🔤 發音</span> <strong>Dengue</strong> = DEN-gay · <strong>Legacy</strong> = LEH-guh-see · <strong>generous</strong> = JEN-er-us</div>
+
+    <div class="talking-points">
+      <span class="label">✅ 為什麼這個答案會被記住</span>
+      <ul>
+        <li><strong>"My first thought — and honestly, my only thought"</strong>——告訴聽者這不是事後合理化，這是病床上真實發生的事</li>
+        <li><strong>"Not fame. Not wealth. Not status."</strong>——三個排除讓「Legacy」變得可信，不是漂亮話</li>
+        <li><strong>結尾講「我已經對家人更大方、花更多時間陪伴」</strong>——具體行為改變，不是抽象反思。Tomoko 身為三個孩子的媽會在這句停住</li>
+        <li><strong>沒有把故事 forced 回 Minerva / 職涯</strong>——Tomoko 會自己連起來，這比你說「所以我要 Minerva」高明 100 倍</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card" style="border-left:4px solid #8b5cf6">
+    <span class="q-tag" style="background:rgba(139,92,246,0.2);color:#c4b5fd">My Answer · Q5 · Cross-Cultural / Cultural Fluency</span>
+    <div class="q-en">Can you tell me about a time when you had to work across a real cultural or values divide in your role?</div>
+    <div class="q-zh">能不能分享一個你必須跨越真實文化或價值落差的時刻？</div>
+
+    <div class="answer-block" style="border-left-color:#a78bfa">
+      <span class="label" style="color:#a78bfa">🇹🇼 我的中文原話（精煉版）</span>
+      <p>我的工作總是在面對不總是說同一種語言的困難。</p>
+      <p>對內，我帶領的部門是<strong>唯一需要對整間公司營收負責的部門</strong>，其他部門在工作目標上不需要負擔募款數字，我也沒有權力要求他們協助我募款。對外，我必須將均一內部夥伴創造的社會影響力，轉換成企業可以理解跟認同的語言。</p>
+      <p>老實說，<strong>我覺得對內溝通比對外溝通更困難</strong>，因為我必須跟跨部門合作，才能對外向企業提案拿到募款，讓組織可以有財務的穩定。但外部的企業很多，我可以選擇價值觀和均一更接近的企業夥伴合作，現階段不適合就婉拒，不會有立即財務風險。</p>
+      <p>我的策略：先跟<strong>願意合作</strong>的部門夥伴<strong>建立信任感</strong>，把他們正在做的事情<strong>轉化成企業願意支持的方案</strong>，在他們需要量化影響力時<strong>給予行銷協助</strong>，提案成功後把<strong>功勞跟掌聲給願意跟我合作的夥伴</strong>，讓其他人看到跟我合作的好處，進而更願意相信我們。</p>
+      <p>我認為大家在均一工作都是為了實現「<strong>讓每個孩子不論出身，都有機會成為終身學習者</strong>」的願景——我們的目標是一樣的，只是達到目標的方式根據大家的專業有不同的貢獻。</p>
+    </div>
+
+    <div class="answer-block" style="border-left-color:#22d3ee">
+      <span class="label" style="color:#22d3ee">🎤 英文版（約 100 秒 · 帶 mic drop 收尾）</span>
+      <p>"My work is constantly about leading across people who don't always speak the same language. <strong>And honestly — internal is harder than external</strong>.</p>
+      <p>Here's why. At Junyi, my department is the <strong>only one</strong> carrying revenue KPIs. Other departments don't have fundraising numbers in their goals. And <strong>I have no formal authority over them</strong>.</p>
+      <p>Externally, I have options — if a corporate partner's values don't align with Junyi, I can walk away. There's no immediate financial risk. <strong>Internally, I can't walk away.</strong> I need cross-functional collaboration to land the proposals that fund the whole organization.</p>
+      <p>So my approach is four moves. <strong>Build trust</strong> with the most open department partners first. <strong>Translate</strong> the work they're already doing into language corporate funders can fund. <strong>Support</strong> them with marketing when they need to quantify impact. And critically — <strong>give them the credit</strong> when we win, so other colleagues see what working with me actually looks like. Trust compounds over time.</p>
+      <p>Underneath all of this, I hold one belief: <strong>we all came to Junyi for the same vision</strong> — that <strong>every child, no matter their background, has the chance to become a lifelong learner</strong>. We share the goal. We just contribute differently, based on our expertise.</p>
+      <p><em>That's the cultural fluency I practice every week.</em>"</p>
+    </div>
+
+    <div class="hint" style="background:rgba(251,191,36,0.08);border-left-color:var(--accent-warm)"><span class="label">🎤 Mic Drop</span> 最後那句 <em>"That's the cultural fluency I practice every week"</em> 把你的答案直接回送 Tomoko 課程核心詞——她會在心裡打勾：「他不只會講，他在做」。一定要保留。</div>
+
+    <div class="hint"><span class="label">🔤 發音</span> <strong>revenue KPIs</strong> = REV-eh-noo K-P-I's · <strong>cross-functional</strong> = cross-FUNK-shun-al · <strong>cultural fluency</strong> = KUL-ch-rul FLOO-en-see</div>
+
+    <div class="talking-points">
+      <span class="label">✅ 為什麼這個答案 powerful</span>
+      <ul>
+        <li><strong>"Internal is harder than external"</strong>——反直覺的 insight，立刻顯示你思考過更深一層</li>
+        <li><strong>「外部我可以走，內部我不能」</strong>——把抽象的「困難」變成可感的「不對等」</li>
+        <li><strong>四步驟方法論</strong>——不是運氣，是 repeatable 的能力</li>
+        <li><strong>引用 Junyi 的官方願景</strong>——把答案從「募款技巧」升級為「使命驅動」</li>
+        <li><strong>mic drop 直接回送「cultural fluency」</strong>——你在做這件事，不是想學它</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- BACKUP STORY -->
+  <div class="qa-card" style="border-left:4px solid #64748b;background:rgba(100,116,139,0.05)">
+    <span class="q-tag" style="background:rgba(100,116,139,0.3);color:#cbd5e1">🗃 BACKUP STORY · 留給其他題目用</span>
+    <h3 style="color:#cbd5e1;margin-top:8px">「客戶砍預算 95%、夥伴一句『辛苦了』」的故事</h3>
+    <p style="color:var(--text-dim);font-size:13px">📍 <strong>適合哪些題目：</strong></p>
+    <ul style="font-size:13.5px;color:var(--text)">
+      <li>"Tell me about a setback or surprising moment."（挫折/意外時刻）</li>
+      <li>"Tell me about handling conflict with a peer."（同儕衝突）</li>
+      <li>"How have you built solidarity in your team?"（團隊凝聚）</li>
+    </ul>
+
+    <div class="answer-block" style="border-left-color:#a78bfa">
+      <span class="label" style="color:#a78bfa">🇹🇼 原話備存</span>
+      <p>最近跟一個客戶談合作，內部有一位夥伴主動找我談，想要把他做的產品也放進提案裡。過程中當我問這個產品可以創造多少量化的影響力時，對方認為我在挑戰他。我解釋我是在提出客戶看到提案也會問我的問題，但他還是有點不開心。</p>
+      <p>後來在主管會議中我同步大家，客戶在會議中突然把合作預算砍了 95%。令我驚訝的是，<strong>這位夥伴主動來關心我，還對我說：「辛苦了！」</strong>外部的壓力，反而讓夥伴更能同理我的困難，讓我覺得是一個能夠凝聚內部團結的好方法。</p>
+    </div>
+
+    <div class="hint" style="background:rgba(251,191,36,0.06);border-left-color:var(--accent-warm)"><span class="label">💡 如果用到這個故事</span> 結尾可以加：<em>"External pressure ironically built more internal empathy than any team-building exercise could. I'd actually want to study with Minerva why that works — and how to design for it on purpose."</em></div>
+  </div>
+
+  <div class="qa-card" style="border-left:4px solid #8b5cf6">
+    <span class="q-tag" style="background:rgba(139,92,246,0.2);color:#c4b5fd">My Answer · Q6 · Why Nippon Foundation Scholarship</span>
+    <div class="q-en">Why should the Nippon Foundation invest in you, specifically? What does that investment return to the world?</div>
+    <div class="q-zh">為什麼日本財團應該投資在你身上？這份投資實際上會回報給世界什麼？</div>
+
+    <div class="answer-block" style="border-left-color:#a78bfa">
+      <span class="label" style="color:#a78bfa">🇹🇼 我的中文原話（修正合成版）</span>
+      <p>如同前面所說，我是一個<strong>務實的理想主義者</strong>。更具體地說——我是一個能<strong>翻譯營利和非營利雙方語言</strong>、同時創造<strong>「兩個 I」：Impact 和 Income</strong> 的人。</p>
+      <p>這個組合在非營利圈裡很罕見。多數領導者只說使命語言。我來自<strong>全球品牌代理商與金融服務</strong>背景，再進非營利——所以我能<strong>寫提案、用 ROI 的語言對企業出資者（如台積電）溝通</strong>，回到 Junyi 團隊則用使命的語言。這就是我們的工作能被資助的原因。</p>
+      <p>我深知日本財團的信念——「<strong>沒有單一組織能獨自解決社會問題</strong>」——這不只跟我的工作對齊，<strong>這就是我的工作</strong>。今年我擔任 <strong>2026 AI 人才高峰會總召集人</strong>，與另外兩間公司共同籌辦，邀請<strong>台灣賴總統</strong>和<strong>台積電資深副總 Lora 何麗梅</strong>到場演講，共同倡議 AI 人才議題。這就是日本財團相信的跨界合作。</p>
+      <p>如果給予我這個獎學金，這份投資不會停在我身上，<strong>會複利</strong>。Minerva → 我 → 我的募款團隊 → <strong>Junyi 的 500 萬學習者</strong> → 最終是那些<strong>最缺乏資源的孩子</strong>：偏鄉的、經濟弱勢的、家裡沒錢補習的小朋友。每一塊我多募到的錢，都會變成更多課程、更多 AI 家教工具——讓這些孩子可以在 Junyi 平台上免費學習、用免費 AI 家教提升能力。</p>
+      <p>這就是社會乘數。<strong>這就是為什麼這份投資對世界的回報，遠遠超過它的成本</strong>。</p>
+    </div>
+
+    <div class="answer-block" style="border-left-color:#22d3ee">
+      <span class="label" style="color:#22d3ee">🎤 英文版（約 110–120 秒 · mic drop 收尾）</span>
+      <p>"As I mentioned earlier, I'm a <strong>pragmatic idealist</strong>. More specifically — I'm someone who can translate between the languages of for-profit and non-profit. I call them the <strong>'two I's' — Impact and Income</strong> — and I create them at the same time.</p>
+      <p>That combination is rare in non-profits. Most leaders speak only the mission language. <strong>I came from global brand agencies and financial services before Junyi</strong>, so I can <strong>write proposals that speak ROI to corporate funders</strong> like TSMC, and speak mission inside our own team. That's how I get our work funded.</p>
+      <p>The Nippon Foundation's belief — that <strong>'no single organization can solve social problems alone'</strong> — is not just aligned with what I do. <strong>It IS what I do.</strong> This year, I'm serving as <strong>General Coordinator of the 2026 AI Talent Summit</strong>, co-organized with two partner companies. We brought together <strong>Taiwan's President Lai</strong> and <strong>TSMC's Senior Vice President Lora Ho</strong> to advocate for AI talent development. That's exactly the kind of cross-sector convening the Foundation believes in.</p>
+      <p>If I'm given this scholarship, the investment doesn't stop at me. <strong>It compounds.</strong> Minerva → me → my fundraising team → <strong>Junyi's 5 million learners</strong> → and at the very end, the children with the least access: <strong>rural kids, economically disadvantaged kids, kids whose families can't afford cram schools.</strong> Every additional dollar I help raise becomes more courses, more AI tutoring tools — so these children can learn for free, with a free AI tutor, on Junyi.</p>
+      <p>That's the multiplier. <span class="pause">[pause 1 second]</span> <em>That's why this investment returns more to the world than it costs.</em>"</p>
+    </div>
+
+    <div class="hint" style="background:rgba(251,191,36,0.08);border-left-color:var(--accent-warm)"><span class="label">💎 你自己想出來的金句（必背！）</span> <strong>"Two I's: Impact and Income"</strong>——整場面試最具殺傷力的差異化詞。Tomoko 跟同事討論你時會用這個詞。一定要念清楚 "two EYES"。</div>
+
+    <div class="hint" style="background:rgba(74,222,128,0.06);border-left-color:var(--good)"><span class="label">🎤 Mic Drop</span> <em>"That's why this investment returns more to the world than it costs."</em>——把 Tomoko 的問題逐字回擲給她。邏輯閉環。</div>
+
+    <div class="hint"><span class="label">🔤 五個發音重點</span> <strong>two I's</strong> = two EYES · <strong>bilingual</strong> = BY-ling-gwul · <strong>convening</strong> = con-VEEN-ing · <strong>advocate</strong>（動詞）= AD-vo-kate · <strong>compounds</strong> = kom-POUNDS</div>
+
+    <div class="talking-points">
+      <span class="label">✅ 這個答案命中所有得分點</span>
+      <ul>
+        <li><strong>差異化</strong>：「兩個 I」+ 跨三個產業的翻譯能力</li>
+        <li><strong>Funder alignment</strong>：直接引用日本財團信念 + AI 高峰會當證據</li>
+        <li><strong>社會乘數</strong>：5 條鏈條 + 具體的孩子畫面</li>
+        <li><strong>具體事實</strong>：賴總統、Lora Ho、500 萬學習者、免費 AI 家教</li>
+        <li><strong>收尾邏輯閉環</strong>：直接回應 "what does it return"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card" style="border-left:4px solid #8b5cf6">
+    <span class="q-tag" style="background:rgba(139,92,246,0.2);color:#c4b5fd">My Answer · Q7 · Cohort Contribution</span>
+    <div class="q-en">Imagine yourself in a Tuesday-night discussion six months in. What would another participant get from being in a room with you?</div>
+    <div class="q-zh">想像你已經參加了六個月，另一位學員從和你共處一室中會得到什麼？</div>
+
+    <div class="answer-block" style="border-left-color:#a78bfa">
+      <span class="label" style="color:#a78bfa">🇹🇼 我的中文原話</span>
+      <p>老實說，<strong>我不確定有什麼東西是他們從其他學員那裡得不到的</strong>，因為我還不知道其他學員的組成、不知道他們擅長的領域。</p>
+      <p>但我覺得裡面的成員是「同時有非營利組織背景又有商業組織背景的人」應該比較少，所以我能夠給的應該是：</p>
+      <p>① <strong>同時有這兩種角度的人會怎麼看待一件事情</strong>——同一個個案，從使命角度看 vs 從 P&L 角度看，會看到完全不一樣的東西。</p>
+      <p>② <strong>在實現很理想的過程中，怎麼樣很務實地實現</strong>。</p>
+      <p>③ <strong>一個非營利組織如何藉由跟政府、企業、學校的合作建立實力</strong>，去創造更多正面的社會影響力。</p>
+      <p>這邊應該是我獨特的地方。</p>
+    </div>
+
+    <div class="answer-block" style="border-left-color:#22d3ee">
+      <span class="label" style="color:#22d3ee">🎤 英文版（約 90 秒 · 保留「誠實開場」並重新包裝為分析式謹慎）</span>
+      <p>"Honestly — that's a question I can only answer <strong>conditionally</strong>, because I don't yet know who else will be in the cohort.</p>
+      <p>But my guess is that the cohort will lean toward for-profit and public sector leaders, with fewer non-profit voices like mine. <strong>If that's true</strong>, here's what I think I bring.</p>
+      <p>First — a <strong>dual-lens view</strong>. I've worked in both for-profit and non-profit, so when the cohort discusses a case, I can show how the same problem looks completely different through a <strong>mission-driven angle versus a P&L angle</strong> — and where those two lenses actually <strong>reinforce each other</strong>, instead of conflicting.</p>
+      <p>Second — <strong>pragmatic idealism</strong>. I know how to be very practical inside very idealistic environments. I can share how I've translated big ideals — like <strong>'lifelong learning for every child'</strong> — into specific revenue models, partnership structures, and operational decisions.</p>
+      <p>And third — <strong>how a non-profit actually builds power</strong>. Most for-profit leaders don't see the back-end of how non-profits create change — how partnerships with <strong>government, companies, and schools</strong> combine into something bigger than any single donor or campaign. I can bring that into the room.</p>
+      <p><em>That's where I think I can contribute something distinct.</em>"</p>
+    </div>
+
+    <div class="hint" style="background:rgba(74,222,128,0.06);border-left-color:var(--good)"><span class="label">💎 為什麼「誠實的開頭」反而是優點</span> Minerva 的 Habits of Mind 核心是「在沒有完整資訊下精準校準主張」。多數申請者用空洞自信掩蓋無知；你用條件式推論。Tomoko 受訓就是要找這種思考精度。<strong>絕對保留 "I can only answer conditionally"。</strong></div>
+
+    <div class="hint"><span class="label">🔤 發音</span> <strong>conditionally</strong> = con-DIH-shun-uh-lee · <strong>dual-lens</strong> = DU-al LENS · <strong>P&L</strong> = P and L · <strong>reinforce</strong> = ree-in-FORCE</div>
+
+    <div class="talking-points">
+      <span class="label">✅ 這個答案 powerful 的原因</span>
+      <ul>
+        <li><strong>開頭認知謙遜</strong>——「我不知道同儕組成所以條件式推論」是 Minerva 最看重的思考姿態</li>
+        <li><strong>三件貢獻互不重複</strong>——雙重視角、務實的理想主義、跨界建立實力</li>
+        <li><strong>第三次出現「pragmatic idealism」</strong>——你的口頭簽名穩定一致</li>
+        <li><strong>第三點「跨界建立實力」</strong>剛好對齊日本財團最相信的事（無意間的 funder alignment）</li>
+        <li><strong>結尾不過度承諾</strong>——「something distinct」比「unique」更謙虛、更精準</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card" style="border-left:4px solid #8b5cf6">
+    <span class="q-tag" style="background:rgba(139,92,246,0.2);color:#c4b5fd">My Answer · Q8 · Growth Area</span>
+    <div class="q-en">What's something you know you'll need to grow into during these six months — a real stretch you're hoping Minerva will help you work on?</div>
+    <div class="q-zh">有什麼是你必須在這六個月裡成長的？某個你誠實地不確定能不能掌握、但希望 Minerva 能幫你練的東西？</div>
+
+    <div class="answer-block" style="border-left-color:#a78bfa">
+      <span class="label" style="color:#a78bfa">🇹🇼 我的中文原話</span>
+      <p>老實說，我最害怕的是<strong>英文即時討論</strong>的部分，因為我知道我的英文能力真的很差。<strong>這點我也沒有打算要隱瞞。</strong></p>
+      <p>另外，我覺得我現在的經驗都還是在<strong>台灣國內比較多，頂多算是跨產業或跨文化，不算是跨國</strong>。我希望可以透過這個計畫<strong>打開我的視野</strong>，也能夠認識更多亞洲的高階主管，和他們互相交流想法，讓我成為更好的領導者。</p>
+    </div>
+
+    <div class="answer-block" style="border-left-color:#22d3ee">
+      <span class="label" style="color:#22d3ee">🎤 英文版（約 110–120 秒 · 兩段式）</span>
+      <p>"There are two things I want to be very direct about.</p>
+      <p>The <strong>first</strong> — my English. I want to be transparent: <strong>my spoken English is not at the level of my thinking</strong>. I'm not going to hide that. In Minerva's Forum, where every session is fast and discussion-driven, that's a real stretch for me. It's actually one of the reasons I want to take the <strong>Professional English Discussion Bootcamp in June</strong>, and treat every Tuesday session as <strong>deliberate practice</strong>. I see this as a six-month investment in a skill I currently don't have at the level I want.</p>
+      <p>The <strong>second</strong> — and more strategic — is that my experience so far has been <strong>across industries and across cultures, but it's all still inside Taiwan</strong>. I've crossed sector lines — ROI versus mission, government versus private. <strong>But I have not yet led across truly different national contexts</strong> — different time zones, different decision-making cultures, different ways of building trust.</p>
+      <p>If Junyi is going to scale beyond Taiwan, and if I want to grow into a leader who can serve Asian education at a regional level — <strong>I need to learn this</strong>. That's why <strong>Course 3 on global teams</strong>, and especially the in-person <strong>Accelerator</strong> — that's exactly the practice I cannot get anywhere else right now.</p>
+      <p>What I really hope to walk away with is — <strong>a wider perspective, real friendships with senior leaders across Asia</strong>, and the ability to come back to Junyi and <strong>lead the next chapter with confidence that's grounded in practice, not just instinct.</strong>"</p>
+    </div>
+
+    <div class="hint" style="background:rgba(74,222,128,0.06);border-left-color:var(--good)"><span class="label">💎 為什麼這個答案 powerful</span> <strong>對英文坦白 = competence signal</strong>（Tomoko 母語也不是英文，會理解這份誠實）。<strong>分清「跨產業 vs 跨國」</strong>是 sophisticated 的自我認識——多數人會混為一談。</div>
+
+    <div class="hint"><span class="label">🔤 發音</span> <strong>transparent</strong> = trans-PEH-rent · <strong>deliberate practice</strong> = deh-LIB-er-it PRAK-tis · <strong>Accelerator</strong> = ak-SEL-er-ay-ter · <strong>grounded</strong> = GROW-nded</div>
+
+    <div class="hint" style="background:rgba(251,191,36,0.08);border-left-color:var(--accent-warm)"><span class="label">🎯 Mic Drop 收尾</span> <em>"Lead the next chapter with confidence that's grounded in practice, not just instinct."</em>——把整場面試兩條主線（從直覺到框架 + 你理解 practice-based）合成一句。</div>
+
+    <div class="talking-points">
+      <span class="label">✅ 這個答案的關鍵殺傷力</span>
+      <ul>
+        <li><strong>「我不打算隱瞞」</strong>——直接面對英文弱點，比迴避強 10 倍</li>
+        <li><strong>把英文成長框架成「6 個月投資 + deliberate practice」</strong>，不是抱怨</li>
+        <li><strong>引用具體計畫元素</strong>（English Bootcamp、Forum、Course 3、Accelerator）展示做過功課</li>
+        <li><strong>「跨產業/跨文化 ≠ 跨國」</strong>的精準區分——多數申請者沒這份自我覺察</li>
+        <li><strong>結尾呼應 Minerva 核心詞「practice-based」</strong>——閉環收尾</li>
+      </ul>
+    </div>
+  </div>
+  <!-- ========== 6-DAY PRACTICE PLAN ========== -->
+  <h2 id="tonight">📅 6 天練習計畫（5/18 → 5/24）</h2>
+  <div class="qa-card" style="border-color:var(--good)">
+    <p style="color:var(--good);font-weight:600;font-size:15px">⚡ 核心原則：練「口頭」不是練「讀稿」。<strong>每天 30 分鐘錄音回放，比 5 小時讀稿有用 10 倍。</strong></p>
+
+    <h3 style="margin-top:16px;color:var(--accent-warm)">🛠 開始前先準備</h3>
+    <ul style="font-size:14px">
+      <li>📱 手機開 <strong>Voice Memos / 錄音 App</strong>（或用 Mac/PC 的錄音工具）</li>
+      <li>🎧 準備耳機（聽自己的聲音時用耳機，比直接放出來更敏感）</li>
+      <li>📝 隨手記本：每次錄完寫下 3 個你不滿意的點（哪個詞卡、哪段太快、哪裡停頓不夠）</li>
+    </ul>
+
+    <hr style="border:0;border-top:1px solid var(--border);margin:20px 0">
+
+    <h3 style="color:#fb923c">📅 Day 1 · 今天（5/18 Mon）— 暖身 · 30 分鐘</h3>
+    <ol style="font-size:14px">
+      <li><strong>5 分鐘</strong>：讀「🎯 30 分鐘優先順序地圖」一次——記住哪些題會被問</li>
+      <li><strong>20 分鐘</strong>：把<strong>8 個縮版</strong>逐一<strong>念出聲</strong>一次（不錄音，純暖身）。每念完一題，記下 2 個你最不舒服的詞</li>
+      <li><strong>5 分鐘</strong>：把那些不舒服的詞集中起來，明天的重點</li>
+    </ol>
+
+    <h3 style="color:#fb923c">📅 Day 2 · 5/19 Tue — Q1 + Q2 深度練 · 30 分鐘</h3>
+    <ol style="font-size:14px">
+      <li><strong>10 分鐘</strong>：對著手機<strong>錄音念 Tight Q1 + Q2</strong>各一次</li>
+      <li><strong>10 分鐘</strong>：戴耳機聽回放——標出 3 個你想修的地方</li>
+      <li><strong>10 分鐘</strong>：針對那 3 個地方各重念 3 遍，最後重錄一次完整 Q1+Q2</li>
+    </ol>
+
+    <h3 style="color:#fb923c">📅 Day 3 · 5/20 Wed — Q3 + Q6 深度練（最重的兩題） · 30 分鐘</h3>
+    <ol style="font-size:14px">
+      <li><strong>10 分鐘</strong>：錄 Tight Q3（分層授權）一次。練「ROAS = ROW-az」、「leverage points」</li>
+      <li><strong>10 分鐘</strong>：錄 Tight Q6（兩個 I）一次。特別練「two I's = two EYES」、「It compounds」之後的停頓</li>
+      <li><strong>10 分鐘</strong>：聽回放、修正、重錄各一次</li>
+    </ol>
+
+    <h3 style="color:#fb923c">📅 Day 4 · 5/21 Thu — Q5 + Q8 + 反問問題 · 30 分鐘</h3>
+    <ol style="font-size:14px">
+      <li><strong>10 分鐘</strong>：錄 Tight Q5（內部比外部難）+ Tight Q8（成長領域）</li>
+      <li><strong>10 分鐘</strong>：聽回放、修正</li>
+      <li><strong>10 分鐘</strong>：把<strong>反問 Tomoko 的 3 個問題</strong>寫在紙上、唸出聲 3 次。寫好的紙明天放在視訊鏡頭旁邊</li>
+    </ol>
+
+    <h3 style="color:#fb923c">📅 Day 5 · 5/22 Fri — 完整 Mock · 40–45 分鐘</h3>
+    <ol style="font-size:14px">
+      <li><strong>5 分鐘</strong>：穿你面試當天會穿的衣服、開電腦視訊軟體預覽自己畫面、深呼吸</li>
+      <li><strong>30 分鐘</strong>：自己<strong>計時走完 6 題</strong>（Q1 → Q2 → Q3 → Q6 → Q8 → 反問）。<strong>全程錄影或錄音。</strong> 模擬 Tomoko 在問你，回答之間留 5 秒模擬她切換問題</li>
+      <li><strong>5–10 分鐘</strong>：看回放、寫下 3 個明天面試前要再注意的點</li>
+    </ol>
+
+    <h3 style="color:#fb923c">📅 Day 6 · 5/23 Sat — 輕鬆日 + 早點睡</h3>
+    <ul style="font-size:14px">
+      <li><strong>白天</strong>：把 Day 5 的 3 個重點各念 3 遍。<strong>不要做新的練習</strong>——這會增加焦慮</li>
+      <li><strong>晚上</strong>：看一集喜歡的劇、跟家人吃飯、不要熬夜。<strong>睡眠對英文流暢度的影響大於任何練習</strong></li>
+    </ul>
+
+    <h3 style="color:#fb923c">📅 5/24 面試當天</h3>
+    <ul style="font-size:14px">
+      <li><strong>早上</strong>：起床念 Tight Q1 一次（暖嗓 + 確認開場第一句）</li>
+      <li><strong>中午吃飽但不過飽</strong>，下午<strong>不要喝太多咖啡</strong>（會讓你語速失控）</li>
+      <li><strong>下午 5:00（1 小時前）</strong>：測試攝影機、麥克風、網路。喝溫水</li>
+      <li><strong>下午 5:30（30 分鐘前）</strong>：讀「🎯 只記五件事」卡片一次。讀「🎯 30 分鐘優先順序地圖」一次</li>
+      <li><strong>下午 5:50（10 分鐘前）</strong>：站起來走兩圈、肩膀繞兩圈、笑兩次</li>
+      <li><strong>下午 5:59（1 分鐘前）</strong>：深呼吸三次。然後<strong>微笑</strong>開啟視訊</li>
+      <li><strong>6:00</strong>：開場第一句脫口而出：<em>"Hi, I'm Vincent. I'd describe myself as a pragmatic idealist..."</em></li>
+    </ul>
+
+    <hr style="border:0;border-top:1px solid var(--border);margin:20px 0">
+
+    <h3 style="color:var(--accent-warm)">⚠️ 不要做的事</h3>
+    <ul style="font-size:14px">
+      <li>❌ <strong>不要</strong>每天加 10 分鐘練習——超過 30 分鐘會疲勞、效果反而下降</li>
+      <li>❌ <strong>不要</strong>連續念同一題超過 5 次——大腦會停止學習</li>
+      <li>❌ <strong>不要</strong>在 Day 5 mock 後再做大幅修改——你的答案會失去流暢度</li>
+      <li>❌ <strong>不要</strong>當天讀新的英文文章——會干擾你準備好的版本</li>
+      <li>❌ <strong>不要</strong>看其他人的「Minerva 面試經驗分享」——會增加焦慮</li>
+    </ul>
+
+    <h3 style="color:var(--good)">✅ 給自己的真話</h3>
+    <p>你的故事本身就強。NT$50M → NT$113M 是事實，8.7x ROAS 是事實，登革熱倖存是事實，幫助 500 萬學習者是事實，「兩個 I」是你自己想出來的金句。<strong>你不是去說服 Tomoko，你是去告訴她一個她需要知道的故事。</strong>她會喜歡的。</p>
+  </div>
+
+  <!-- ========== PROGRAM FACTS ========== -->
+  <h2 id="program">📚 Program Facts You Must Know · 必須記得的計畫事實</h2>
+
+  <div class="qa-card">
+    <h3 style="margin-top:0">關鍵事實 · Key Facts (自然帶入、不要背)</h3>
+    <ul style="line-height:1.75">
+      <li><strong>Program name 計畫名稱：</strong> World Wise Executive Leadership Development Program<br/><span style="color:var(--zh);font-size:13.5px">「世界智慧」高階領導發展計畫</span></li>
+      <li><strong>Launched 啟動：</strong> January 15, 2026 — Partner: <strong>The Nippon Foundation</strong> · Inaugural cohort starts June 2026<br/><span style="color:var(--zh);font-size:13.5px">2026 年 1 月 15 日啟動，合作夥伴：日本財團（The Nippon Foundation）。首屆同儕於 2026 年 6 月開課。</span></li>
+      <li><strong>Format 形式：</strong> 6 months · weekly virtual seminars on Forum · <strong>no lectures, ever</strong> · regional cohort (East Asia pilot)<br/><span style="color:var(--zh);font-size:13.5px">六個月，每週在 Forum 平台上的線上研討課，<strong>完全沒有講授</strong>，區域型同儕（首屆為東亞試點）。</span></li>
+      <li><strong>Three Courses 三門課程 (28 × 90-min sessions / 共 28 堂、每堂 90 分鐘)：</strong>
+        <ol style="margin-top:6px">
+          <li><strong>World Wise Executive Leadership</strong> (9 sessions) — mechanistic & systems thinking, interpersonal intelligence, global leadership<br/><span style="color:var(--zh);font-size:13.5px">「世界智慧高階領導力」（9 堂）——機械式與系統思考、人際智慧、全球領導</span></li>
+          <li><strong>Leadership in Complexity</strong> (12 sessions) — root-cause analysis, cognitive bias, AI-augmented analytics for strategic decisions<br/><span style="color:var(--zh);font-size:13.5px">「複雜性領導力」（12 堂）——根因分析、認知偏誤、AI 輔助的策略決策分析</span></li>
+          <li><strong>Communication for Leading High-Performing Global Teams</strong> (7 sessions) — cross-cultural messaging, listening, leveraging diverse views<br/><span style="color:var(--zh);font-size:13.5px">「領導高績效全球團隊的溝通」（7 堂）——跨文化訊息傳遞、傾聽、善用多元觀點</span></li>
+        </ol>
+      </li>
+      <li><strong>In-person events 實體活動：</strong> Tokyo Kickoff (July 2026) · 7-10 day <strong>Leadership Accelerator</strong> (March 2027, rotates across San Francisco / Berlin / Seoul / Hyderabad / London)<br/><span style="color:var(--zh);font-size:13.5px">東京開幕營（2026 年 7 月）；7–10 天的<strong>領導力加速器</strong>（2027 年 3 月，輪流在舊金山／柏林／首爾／海德拉巴／倫敦舉行）</span></li>
+      <li><strong>Pre-program option 開課前選項：</strong> Professional English Discussion Bootcamp (June 2026)<br/><span style="color:var(--zh);font-size:13.5px">專業英文討論訓練營（2026 年 6 月）</span></li>
+      <li><strong>Post-program community 結業後社群：</strong> quarterly workshops · global alumni platform · annual World Wise Leadership Summit (from 2028)<br/><span style="color:var(--zh);font-size:13.5px">每季工作坊、全球校友平台、年度「世界智慧領導力峰會」（2028 年起舉辦）</span></li>
+    </ul>
+
+    <h3>People to know · 必須知道的人物</h3>
+    <div class="quote">
+      <strong>Mike Magee</strong>, President of Minerva University：<br/>
+      "This expansion into executive leadership programs builds on our mission to develop <strong>globally adaptive, ethically grounded leaders</strong>."<br/>
+      <span style="color:var(--zh);font-size:13.5px;font-style:normal">Minerva 大學校長 Mike Magee：「擴展到高階領導力計畫，建立在我們培養<strong>具全球適應力、有倫理基礎的領導者</strong>的使命之上。」</span>
+    </div>
+    <div class="quote">
+      <strong>Jumpei Sasakawa</strong>, President, The Nippon Foundation：<br/>
+      "Minerva's <strong>practice-based, dialogue-driven approach</strong> offers valuable insights for developing the next generation of leaders in Japan and across Asia."<br/>
+      <span style="color:var(--zh);font-size:13.5px;font-style:normal">日本財團主席 笹川順平：「Minerva <strong>以實踐為基礎、以對話驅動</strong>的方法，對培育日本與亞洲下一代的領導者提供了寶貴的洞見。」</span>
+    </div>
+    <div class="quote">
+      <strong>Ben Nelson</strong>, Founder &amp; Chancellor of Minerva (good to know but optional): pioneered the "fully active learning" model on the <strong>Forum</strong> platform.<br/>
+      <span style="color:var(--zh);font-size:13.5px;font-style:normal">Minerva 創辦人兼名譽校長 Ben Nelson（知道即可、不必提）：在 <strong>Forum</strong> 平台上率先開創了「完全主動學習」的模式。</span>
+    </div>
+
+    <h3>Nippon Foundation core philosophy · 日本財團核心理念</h3>
+    <p><strong>Mission：</strong> "A society where all people support one another." Founded 1962, Asia's leading grantmaker. Defines <strong>Social Innovation</strong> as <em>"implementing ideas to create new frameworks and bring about change for a better society."</em> Believes <strong>no single organization can solve social problems alone</strong> — cross-sector collaboration is essential. This is exactly your story.</p>
+    <p style="color:var(--zh);font-size:13.5px;border-top:1px dashed rgba(252,211,77,0.2);padding-top:8px"><strong>使命：</strong>「一個所有人互相支持的社會」。1962 年成立，亞洲最大的慈善基金會。把<strong>「社會創新」</strong>定義為<em>「實踐想法、建立新框架、為更好的社會帶來改變」</em>。相信<strong>沒有任何單一組織能獨自解決社會問題</strong>——跨界合作是必要的。這正好就是你的故事。</p>
+  </div>
+  <!-- ========== RESCUE PHRASES ========== -->
+  <h2 id="rescue">🆘 Rescue Phrases — When You Don't Understand · 聽不懂時的救援句</h2>
+
+  <div class="qa-card">
+    <h3 style="margin-top:0">⏸ When you need a moment to think · 需要思考時</h3>
+    <div class="answer-block">
+      <p><strong style="color:var(--en)">EN:</strong> "That's a great question. Let me think for a moment." <em>(then pause 3-5 seconds, breathe)</em><br/><strong style="color:var(--zh)">中:</strong> 「這是個好問題，讓我思考一下。」 <em>（然後停 3–5 秒、深呼吸）</em></p>
+      <p><strong style="color:var(--en)">EN:</strong> "I want to give you a thoughtful answer — give me one moment to organize my thinking."<br/><strong style="color:var(--zh)">中:</strong> 「我想給你一個有想法的回答——讓我整理一下思緒。」</p>
+      <p><strong style="color:var(--en)">EN:</strong> "Let me take that in two parts." <em>(buys time, signals structure)</em><br/><strong style="color:var(--zh)">中:</strong> 「讓我分兩部分回答。」 <em>（爭取時間、暗示有結構）</em></p>
+    </div>
+
+    <h3>❓ When you didn't catch the question · 沒聽清楚</h3>
+    <div class="answer-block">
+      <p><strong style="color:var(--en)">EN:</strong> "Could you repeat the question? I want to make sure I answer what you're really asking."<br/><strong style="color:var(--zh)">中:</strong> 「可以重複一次問題嗎？我想確認我有回答到你真正想問的。」</p>
+      <p><strong style="color:var(--en)">EN:</strong> "Could you rephrase that — I want to be sure I understood you correctly."<br/><strong style="color:var(--zh)">中:</strong> 「可以換個方式說嗎？我想確認我有正確理解。」</p>
+      <p><strong style="color:var(--en)">EN:</strong> "Just to confirm — are you asking about [X] or about [Y]?"<br/><strong style="color:var(--zh)">中:</strong> 「我跟你確認一下——你是想問 [X]、還是 [Y]？」</p>
+    </div>
+
+    <h3>🔄 When you don't understand a word · 聽不懂某個字</h3>
+    <div class="answer-block">
+      <p><strong style="color:var(--en)">EN:</strong> "I'm not familiar with that term — could you explain what you mean by [word]?"<br/><strong style="color:var(--zh)">中:</strong> 「我對這個詞不太熟——可以解釋一下你說的 [字] 是什麼意思嗎？」</p>
+      <p><strong style="color:var(--en)">EN:</strong> "I want to make sure I'm using the same definition you are — what do you mean by [word] in this context?"<br/><strong style="color:var(--zh)">中:</strong> 「我想確認我們用的是同一個定義——在這個情境下你說的 [字] 是指什麼？」</p>
+    </div>
+
+    <h3>🛠 When you make a mistake or want to restart · 講錯想重來</h3>
+    <div class="answer-block">
+      <p><strong style="color:var(--en)">EN:</strong> "Let me restart that thought more clearly."<br/><strong style="color:var(--zh)">中:</strong> 「讓我把這個想法重新講得更清楚。」</p>
+      <p><strong style="color:var(--en)">EN:</strong> "Actually, let me give you a sharper version of that."<br/><strong style="color:var(--zh)">中:</strong> 「其實，讓我給你一個更精準的版本。」</p>
+      <p><strong style="color:var(--en)">EN:</strong> "What I should have said is…"<br/><strong style="color:var(--zh)">中:</strong> 「我應該說的是……」</p>
+    </div>
+
+    <h3>💡 When you want to slow yourself down · 想放慢自己</h3>
+    <div class="answer-block">
+      <p><strong style="color:var(--en)">EN:</strong> "Let me give you the short version, and then the example." <em>(forces structure)</em><br/><strong style="color:var(--zh)">中:</strong> 「讓我先說精簡版，然後再舉例。」 <em>（強迫自己有結構）</em></p>
+      <p><strong style="color:var(--en)">EN:</strong> "There are three things I'd point to here." <em>(buys you the time to find the three)</em><br/><strong style="color:var(--zh)">中:</strong> 「這裡我想指出三件事。」 <em>（爭取時間去想那三件事）</em></p>
+      <p><strong style="color:var(--en)">EN:</strong> "The key thing is X. Let me explain why."<br/><strong style="color:var(--zh)">中:</strong> 「關鍵在於 X，讓我解釋為什麼。」</p>
+    </div>
+
+    <h3>🤝 When closing the interview · 結束面試</h3>
+    <div class="answer-block">
+      <p><strong style="color:var(--en)">EN:</strong> "Thank you for the thoughtful conversation. I'm even more convinced this is the right program for me — and I hope to be part of the inaugural cohort."<br/><strong style="color:var(--zh)">中:</strong> 「謝謝你這場深度的對談。我比之前更確信這是適合我的計畫——也希望能成為首屆同儕的一員。」</p>
+      <p><strong style="color:var(--en)">EN:</strong> "I appreciate you taking the time. I'm excited about the program and looking forward to next steps."<br/><strong style="color:var(--zh)">中:</strong> 「謝謝你撥空。我對這個計畫感到興奮，也期待後續的步驟。」</p>
+    </div>
+  </div>
+
+  <!-- ========== VOCAB ========== -->
+  <h2 id="vocab">📖 Key Vocabulary You Should Pronounce Confidently · 必須念順的關鍵字</h2>
+
+  <div class="qa-card">
+    <table class="vocab-table">
+      <thead><tr><th>Word / Phrase</th><th>How to think of it</th><th>中文</th></tr></thead>
+      <tbody>
+        <tr><td>Cultural fluency</td><td>kuhl-CHUR-uhl FLOO-uhn-see</td><td>文化流暢度</td></tr>
+        <tr><td>Stakeholder alignment</td><td>STAKE-hol-der uh-LINE-ment</td><td>利害關係人對齊</td></tr>
+        <tr><td>Cross-functional</td><td>cross-FUNK-shuh-nuhl</td><td>跨職能</td></tr>
+        <tr><td>Cognitive bias</td><td>COG-ni-tiv BYE-us</td><td>認知偏誤</td></tr>
+        <tr><td>Systems thinking</td><td>SIS-tems THINK-ing</td><td>系統思考</td></tr>
+        <tr><td>Mechanistic</td><td>mek-uh-NIS-tik</td><td>機械論的</td></tr>
+        <tr><td>Interpersonal intelligence</td><td>in-ter-PER-suh-nuhl in-TEL-i-jens</td><td>人際智慧</td></tr>
+        <tr><td>Lateral leadership</td><td>LAT-er-uhl LEAD-er-ship</td><td>橫向領導</td></tr>
+        <tr><td>Multi-stakeholder</td><td>MUL-tee-STAKE-hol-der</td><td>多方利害關係人</td></tr>
+        <tr><td>Compounding</td><td>kom-POUND-ing</td><td>複利的</td></tr>
+        <tr><td>Resilience</td><td>ree-ZIL-yens</td><td>韌性</td></tr>
+        <tr><td>Philanthropy</td><td>fi-LAN-thro-pee</td><td>慈善</td></tr>
+        <tr><td>ROI-driven</td><td>R-O-I driven</td><td>投資回報導向</td></tr>
+        <tr><td>The Nippon Foundation</td><td>nih-PON foun-DAY-shun</td><td>日本財團</td></tr>
+        <tr><td>Junyi Academy</td><td>JOON-yee uh-KAD-uh-mee</td><td>均一平台</td></tr>
+        <tr><td>Code.org</td><td>code-dot-org</td><td>—</td></tr>
+        <tr><td>Mike Magee</td><td>Mike muh-GEE</td><td>Minerva 校長</td></tr>
+        <tr><td>Jumpei Sasakawa</td><td>JOOM-pay sah-sah-KAH-wah</td><td>日本財團主席</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========== DON'T SAY ========== -->
+  <h2 id="dont">🚫 What NOT to Say · 千萬別講的事</h2>
+
+  <div class="qa-card">
+    <ul style="line-height:1.75">
+      <li style="margin-bottom:10px"><strong>Don't say "I want to learn from world-class professors."</strong> Minerva doesn't lecture — that line signals you misunderstand the model.<br/><span style="color:var(--zh);font-size:13.5px">❌ 不要說：「我想跟世界級教授學習。」Minerva 不講授——這句話會顯示你誤解了他們的模式。</span></li>
+      <li style="margin-bottom:10px"><strong>Don't list 10 modules.</strong> Pick 2 (Leadership in Complexity + Cultural Fluency) and go deep.<br/><span style="color:var(--zh);font-size:13.5px">❌ 不要列 10 個模組。挑 2 個（複雜性領導力＋文化流暢度）深入講。</span></li>
+      <li style="margin-bottom:10px"><strong>Don't apologize for your English more than once.</strong> Acknowledge once, frame as growth, move on.<br/><span style="color:var(--zh);font-size:13.5px">❌ 不要為自己的英文道歉超過一次。承認一次、框架成成長領域、然後往前走。</span></li>
+      <li style="margin-bottom:10px"><strong>Don't say "Minerva will change my life."</strong> Too soft. Say "Minerva will give me X specific capability I'll deploy by Y date."<br/><span style="color:var(--zh);font-size:13.5px">❌ 不要說：「Minerva 會改變我的人生。」太空泛。應該說：「Minerva 會給我 X 這項具體能力，我會在 Y 日期前用上。」</span></li>
+      <li style="margin-bottom:10px"><strong>Don't say "I just want the network."</strong> True but undersells you. Frame as: "I want a cohort to stress-test my frameworks against."<br/><span style="color:var(--zh);font-size:13.5px">❌ 不要說：「我就是想要人脈。」雖然真實但會貶低你自己。改說：「我想要一群同儕來壓力測試我的框架。」</span></li>
+      <li style="margin-bottom:10px"><strong>Don't recite numbers without context.</strong> "8.7x ROAS" alone is jargon. "8.7x ROAS — which meant we proved the framework before scaling" is a story.<br/><span style="color:var(--zh);font-size:13.5px">❌ 不要乾念數字、沒給脈絡。「8.7 倍 ROAS」單獨講是行話。「8.7 倍 ROAS——這代表我們在規模化前先驗證了框架」才是故事。</span></li>
+      <li style="margin-bottom:10px"><strong>Don't bash Taiwan's education system</strong> — even if asked. Frame challenges as opportunities the program will help you address.<br/><span style="color:var(--zh);font-size:13.5px">❌ 不要批評台灣教育體系——就算被問到也不要。把挑戰描述成這個計畫能幫你解決的機會。</span></li>
+      <li style="margin-bottom:10px"><strong>Don't say "if I don't get this scholarship, I won't be able to attend."</strong> Reframe to: "It's about the signal, not just the cost."<br/><span style="color:var(--zh);font-size:13.5px">❌ 不要說：「如果我沒拿到獎學金就沒辦法參加。」改說：「這不只是錢，更是一個訊號的意義。」</span></li>
+      <li style="margin-bottom:10px"><strong>Don't make jokes about your English.</strong> Self-deprecating humor often doesn't translate well in evaluative interviews.<br/><span style="color:var(--zh);font-size:13.5px">❌ 不要拿自己的英文開玩笑。自嘲式幽默在評估型面試中常常會被誤解。</span></li>
+      <li><strong>Don't pretend to know things you don't.</strong> If asked about something specific you haven't seen, say: "I haven't seen that specifically — could you share more?" Honest > bluffing.<br/><span style="color:var(--zh);font-size:13.5px">❌ 不要假裝你知道不知道的事。如果被問到你沒看過的具體內容，就說：「這個我沒有特別看過——你可以多分享一些嗎？」誠實勝過虛張聲勢。</span></li>
+    </ul>
+  </div>
+
+  <!-- ========== FINAL CHECKLIST ========== -->
+  <h2 id="checklist">✅ 30-Minute-Before Checklist · 面試前 30 分鐘檢查表</h2>
+  <div class="qa-card">
+    <ul style="line-height:1.85">
+      <li>☐ Re-read "Top-of-Mind Cheat Sheet" once<br/><span style="color:var(--zh);font-size:13.5px">☐ 把「Top-of-Mind 速查」再讀一次</span></li>
+      <li>☐ Re-read Tight Q1, Q2, Q6 (the three you'll definitely face)<br/><span style="color:var(--zh);font-size:13.5px">☐ 重讀縮版 Q1（自我介紹）、Q2（為何 Minerva）、Q6（為何獎學金）——這三題一定會被問</span></li>
+      <li>☐ Have your <strong>Resume + Personal Statement</strong> visible on a second screen<br/><span style="color:var(--zh);font-size:13.5px">☐ 把<strong>履歷 + 自傳</strong>打開在第二個螢幕</span></li>
+      <li>☐ Open this page in a tab; have rescue phrases ready<br/><span style="color:var(--zh);font-size:13.5px">☐ 把這個儀表板開在分頁中；救援句準備好</span></li>
+      <li>☐ Drink water; have a glass in frame<br/><span style="color:var(--zh);font-size:13.5px">☐ 喝水；把一杯水放在鏡頭看得到的位置</span></li>
+      <li>☐ Test camera and audio 10 min ahead<br/><span style="color:var(--zh);font-size:13.5px">☐ 10 分鐘前測試攝影機跟麥克風</span></li>
+      <li>☐ Stand and breathe deeply 60 seconds before logging in — calms your voice<br/><span style="color:var(--zh);font-size:13.5px">☐ 登入前站起來深呼吸 60 秒——能讓聲音穩定</span></li>
+      <li>☐ First sentence ready: <em>"Hi, I'm Vincent. I'd describe myself as a pragmatic idealist..."</em><br/><span style="color:var(--zh);font-size:13.5px">☐ 開場第一句準備好：「嗨，我是 Vincent。我會形容自己是一個務實的理想主義者……」</span></li>
+      <li>☐ Have your 2 prepared questions written down (so you don't forget at the end)<br/><span style="color:var(--zh);font-size:13.5px">☐ 把你準備的 2 個反問問題寫在紙上（避免結尾時忘記）</span></li>
+      <li>☐ Smile when you log on. Even on video, it changes your voice.<br/><span style="color:var(--zh);font-size:13.5px">☐ 登入時微笑。就算是視訊，微笑也會改變你的聲音。</span></li>
+    </ul>
+  </div>
+
+</main>
+
+<!-- ===== CHAT ASSISTANT WIDGET ===== -->
+<style>
+  .chat-fab {
+    position: fixed;
+    right: 24px;
+    bottom: 80px;
+    z-index: 100;
+    background: linear-gradient(135deg, #38bdf8 0%, #22d3ee 100%);
+    color: #0c1325;
+    border: 0;
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+    transition: transform .12s;
+  }
+  .chat-fab:hover { transform: translateY(-2px); }
+  .chat-modal {
+    display: none;
+    position: fixed;
+    right: 24px;
+    bottom: 140px;
+    z-index: 200;
+    width: min(560px, 94vw);
+    height: min(680px, 80vh);
+    background: var(--bg-2);
+    border: 1px solid var(--accent);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .chat-modal.open { display: flex; }
+  .chat-header {
+    background: linear-gradient(90deg, #0b3a52 0%, #1e293b 100%);
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .chat-header h3 { margin: 0; font-size: 15px; color: var(--accent-2); }
+  .chat-header .close {
+    background: transparent;
+    color: var(--text-dim);
+    border: 0;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 8px;
+    line-height: 1;
+  }
+  .chat-suggestions {
+    padding: 10px 12px 0 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+  }
+  .chat-suggestions button {
+    background: var(--bg-3);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 11px;
+    font-size: 11.5px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all .12s;
+  }
+  .chat-suggestions button:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .chat-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .chat-msg {
+    max-width: 96%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+  .chat-msg.user {
+    background: var(--accent);
+    color: #0c1325;
+    align-self: flex-end;
+    font-weight: 600;
+    max-width: 80%;
+  }
+  .chat-msg.bot {
+    background: transparent;
+    padding: 0;
+    color: var(--text);
+  }
+  .chat-result {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .chat-result-q {
+    background: var(--bg-3);
+    padding: 10px 14px;
+    font-size: 13.5px;
+    color: var(--text-bright);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+  }
+  .chat-result-q .tag {
+    display: inline-block;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    background: rgba(251,191,36,.12);
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+  .chat-result-q .zh-q {
+    display: block;
+    color: var(--zh);
+    font-weight: 500;
+    font-size: 12.5px;
+    margin-top: 4px;
+  }
+  .chat-result-body { padding: 12px; }
+  .chat-result-body .answer-block { margin: 0 0 8px 0; padding: 10px 12px; font-size: 13px; }
+  .chat-result-body .answer-block:last-child { margin-bottom: 0; }
+  .chat-result-body .answer-block p { font-size: 13px; }
+  .chat-result .jump {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 12px;
+    margin: 0 14px 12px 14px;
+    border-bottom: 1px dashed var(--accent);
+  }
+  .chat-input-row {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-2);
+  }
+  .chat-input-row input {
+    flex: 1;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  .chat-input-row input:focus {
+    outline: 0;
+    border-color: var(--accent);
+  }
+  .chat-input-row button {
+    background: var(--accent);
+    color: #0c1325;
+    border: 0;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .no-match {
+    background: rgba(248, 113, 113, .08);
+    border-left: 3px solid var(--warn);
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .no-match strong { color: var(--warn); }
+  .chat-meta {
+    color: var(--text-dim);
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  @media (max-width: 640px) {
+    .chat-modal { right: 8px; left: 8px; bottom: 130px; width: auto; }
+    .chat-fab { right: 12px; }
+  }
+</style>
+
+<style>
+  .back-to-jump-fab {
+    position: fixed;
+    right: 24px;
+    bottom: 136px;
+    z-index: 100;
+    background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+    color: #1a1407;
+    border: 0;
+    padding: 11px 18px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform .12s, box-shadow .12s;
+    font-family: inherit;
+  }
+  .back-to-jump-fab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(249,115,22,0.4);
+  }
+  .back-to-jump-fab .arrow {
+    font-size: 16px;
+    line-height: 1;
+  }
+  @media (max-width: 640px) {
+    .back-to-jump-fab { right: 12px; bottom: 196px; padding: 10px 14px; font-size: 12.5px; }
+  }
+</style>
+<button class="back-to-jump-fab" id="backToJump" title="回到快速跳轉區 (鍵盤 J)"><span class="arrow">⬆</span><span>回 Q1–Q8</span></button>
+<button class="chat-fab" id="openChat">💬 問儀表板</button>
+<div class="chat-modal" id="chatModal">
+  <div class="chat-header">
+    <h3>💬 問儀表板 — 我幫你找答案</h3>
+    <button class="close" onclick="document.getElementById('chatModal').classList.remove('open')">✕</button>
+  </div>
+  <div class="chat-suggestions" id="chatSuggestions">
+    <button data-q="tell me about yourself">自我介紹</button>
+    <button data-q="why minerva">Why Minerva</button>
+    <button data-q="why scholarship nippon foundation">Why scholarship</button>
+    <button data-q="tell me about a failure">失敗</button>
+    <button data-q="cross-cultural">跨文化</button>
+    <button data-q="lateral leadership without authority">橫向領導</button>
+    <button data-q="dengue">登革熱</button>
+    <button data-q="English speaking weak">英文弱</button>
+    <button data-q="future goals">未來目標</button>
+    <button data-q="cohort contribution">同儕貢獻</button>
+    <button data-q="questions to ask interviewer">反問問題</button>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-msg bot">
+      <div class="chat-result" style="background:linear-gradient(135deg,#0b3a52 0%,#1e293b 100%);border-color:var(--accent)">
+        <div class="chat-result-body" style="padding:14px">
+          <div style="color:var(--accent-2);font-weight:600;margin-bottom:6px">你好 👋 我隨時待命</div>
+          <div style="font-size:13px;line-height:1.6">
+            把面試官問的問題打進來（中文或英文都可以），我會從你準備的 26 題答案庫裡找最相關的回答，並排顯示中英文。<br/><br/>
+            <strong style="color:var(--accent-warm)">使用情境：</strong><br/>
+            • Tomoko 問了個你沒想到的問題 → 快速輸入關鍵字找答案<br/>
+            • 想複習某題但忘了在哪 → 直接搜尋<br/>
+            • 試試上面 11 個快速按鈕<br/><br/>
+            <em style="color:var(--text-dim);font-size:12px">提示：按鍵盤 C 鍵可快速打開這個視窗</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chat-input-row">
+    <input id="chatInput" placeholder="輸入問題或關鍵字… 例：tell me about a time you failed" autocomplete="off" />
+    <button id="chatSend">送出</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Build index from existing Q&A cards
+  const chatIndex = [];
+  document.querySelectorAll('.qa-card').forEach(card => {
+    const qEnEl = card.querySelector('.q-en');
+    const qZhEl = card.querySelector('.q-zh');
+    if (!qEnEl && !qZhEl) return; // only cards with a real question
+    const qEn = qEnEl ? qEnEl.textContent.trim() : '';
+    const qZh = qZhEl ? qZhEl.textContent.trim() : '';
+    const tagEl = card.querySelector('.q-tag');
+    const tag = tagEl ? tagEl.textContent.trim() : '';
+    const enBlock = card.querySelector('.answer-block:not(.zh)');
+    const zhBlock = card.querySelector('.answer-block.zh');
+    const allText = (qEn + ' ' + qZh + ' ' + tag + ' ' +
+      (enBlock ? enBlock.textContent : '') + ' ' +
+      (zhBlock ? zhBlock.textContent : '')).toLowerCase();
+    let h2 = card.previousElementSibling;
+    while (h2 && h2.tagName !== 'H2') h2 = h2.previousElementSibling;
+    chatIndex.push({
+      card, qEn, qZh, tag, allText, enBlock, zhBlock,
+      anchorId: card.id || (h2 ? h2.id : '')
+    });
+  });
+
+  // Synonym map — boosts recall for common interview phrasings
+  const synonyms = {
+    'intro': ['tell me about yourself', 'self', 'background', 'who are you', '自我介紹', '介紹自己'],
+    'whyminerva': ['why this program', 'why world wise', 'why minerva', 'fit', '為何', '為什麼選'],
+    'scholarship': ['nippon foundation', 'funding', 'tuition', 'invest in you', '獎學金', '財團', '日本'],
+    'failure': ['mistake', 'regret', 'wrong', 'mess up', '失敗', '錯誤', '後悔'],
+    'crosscultural': ['culture', 'international', 'global', 'across borders', 'fluency', '跨文化', '文化', '國際'],
+    'lateral': ['without authority', 'no formal power', 'influence', 'peers', '橫向', '權力', '影響'],
+    'dengue': ['hospital', 'illness', 'sick', 'survived', 'near death', '登革熱', '生病', '住院', '差點死'],
+    'english': ['language', 'speaking', 'spoken', 'fluent', '英文', '口說', '英語'],
+    'goals': ['future', 'vision', 'plan', 'years', '目標', '未來', '計畫'],
+    'cohort': ['peers', 'classmates', 'group', 'class', 'contribute', '同儕', '同學', '貢獻'],
+    'active': ['no lecture', 'discussion', 'forum', '主動學習', '無講授', '討論'],
+    'tsmc': ['tier-1', 'partnership', 'b2b', '台積電'],
+    'achievement': ['accomplishment', 'success', 'proud', 'biggest', '成就', '最大', '驕傲'],
+    'cathay': ['financial', 'banking', 'corporate', '國泰', '金融'],
+    'hard': ['stress', 'challenge', 'difficult', 'tough', '困難', '棘手'],
+    'ask': ['questions for us', 'questions to ask', '反問', '問你', 'questions for you']
+  };
+  function expandQuery(q) {
+    let expanded = q.toLowerCase();
+    Object.keys(synonyms).forEach(key => {
+      synonyms[key].forEach(syn => {
+        if (expanded.includes(syn.toLowerCase())) expanded += ' ' + key + ' ' + synonyms[key].join(' ');
+      });
+    });
+    return expanded;
+  }
+
+  function tokenize(s) {
+    s = s.toLowerCase().trim();
+    const tokens = new Set();
+    (s.match(/[a-z]+/g) || []).forEach(w => { if (w.length > 1) tokens.add(w); });
+    (s.match(/[一-鿿]+/g) || []).forEach(run => {
+      tokens.add(run);
+      for (let i = 0; i < run.length - 1; i++) tokens.add(run.substring(i, i + 2));
+    });
+    return [...tokens];
+  }
+
+  // Common English stopwords to deprioritize
+  const stopwords = new Set(['the','and','for','you','your','about','what','how','why','when','where','tell','me','do','does','can','will','would','should','could','have','has','had','was','were','are','is','am','be','been','this','that','these','those','of','to','in','on','at','by','an','as','it','its','if','or','but','from','with','into','out','up','down','i\'m','i\'ve','i\'ll']);
+
+  function searchChat(query) {
+    if (!query.trim()) return [];
+    const expanded = expandQuery(query);
+    const tokens = tokenize(expanded).filter(t => !stopwords.has(t));
+    if (!tokens.length) return [];
+    return chatIndex.map(item => {
+      let score = 0;
+      tokens.forEach(t => {
+        const qen = item.qEn.toLowerCase();
+        const qzh = item.qZh;
+        const tag = item.tag.toLowerCase();
+        if (qen.includes(t)) score += 10;
+        if (qzh.includes(t)) score += 10;
+        if (tag.includes(t)) score += 5;
+        if (item.allText.includes(t)) score += 1;
+      });
+      return { item, score };
+    })
+    .filter(s => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
+  }
+
+  function renderResults(query, results) {
+    const body = document.getElementById('chatBody');
+    const userMsg = document.createElement('div');
+    userMsg.className = 'chat-msg user';
+    userMsg.textContent = query;
+    body.appendChild(userMsg);
+    const botMsg = document.createElement('div');
+    botMsg.className = 'chat-msg bot';
+    if (!results.length) {
+      botMsg.innerHTML = '<div class="no-match"><strong>沒找到完全對應的題目。</strong><br/>試試這些關鍵字：<em>tell me about, why, failure, cross-cultural, scholarship, goals, dengue, cohort, lateral, active learning</em><br/><br/>或點上方的快速按鈕。<br/><br/><strong style="color:var(--accent-warm)">⚠️ 真的卡住時的萬用回答：</strong><br/>"That\'s a great question — let me think for a moment." 停 3 秒，然後回到你的核心敘事弧（Dengue → local mastery → gap → Minerva）。九成的問題都能繞回這個敘事。</div>';
+    } else {
+      const summary = results.length === 1
+        ? '找到 1 個最相關的回答：'
+        : '找到 ' + results.length + ' 個相關回答（按相關度排序）：';
+      botMsg.innerHTML = '<div class="chat-meta">' + summary + '</div>';
+      results.forEach(r => {
+        const item = r.item;
+        const result = document.createElement('div');
+        result.className = 'chat-result';
+        const qBlock = document.createElement('div');
+        qBlock.className = 'chat-result-q';
+        let qHtml = '';
+        if (item.tag) qHtml += '<div class="tag">' + item.tag + '</div>';
+        qHtml += '<div>' + item.qEn + '</div>';
+        if (item.qZh) qHtml += '<span class="zh-q">' + item.qZh + '</span>';
+        qBlock.innerHTML = qHtml;
+        result.appendChild(qBlock);
+        const bodyBlock = document.createElement('div');
+        bodyBlock.className = 'chat-result-body';
+        if (item.enBlock) {
+          const enClone = item.enBlock.cloneNode(true);
+          bodyBlock.appendChild(enClone);
+        }
+        if (item.zhBlock) {
+          const zhClone = item.zhBlock.cloneNode(true);
+          bodyBlock.appendChild(zhClone);
+        }
+        result.appendChild(bodyBlock);
+        if (item.anchorId || item.card.id) {
+          const link = document.createElement('a');
+          link.className = 'jump';
+          link.href = '#' + (item.card.id || item.anchorId);
+          link.textContent = '→ 跳到完整卡片（含 talking points / hints）';
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            item.card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const original = item.card.style.outline;
+            item.card.style.outline = '2px solid var(--accent)';
+            item.card.style.outlineOffset = '4px';
+            setTimeout(() => { item.card.style.outline = original; item.card.style.outlineOffset = ''; }, 2200);
+          });
+          result.appendChild(link);
+        }
+        botMsg.appendChild(result);
+      });
+    }
+    body.appendChild(botMsg);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function handleSend() {
+    const input = document.getElementById('chatInput');
+    const q = input.value.trim();
+    if (!q) return;
+    renderResults(q, searchChat(q));
+    input.value = '';
+    input.focus();
+  }
+
+  document.getElementById('openChat').addEventListener('click', () => {
+    document.getElementById('chatModal').classList.add('open');
+    setTimeout(() => document.getElementById('chatInput').focus(), 100);
+  });
+  document.getElementById('chatSend').addEventListener('click', handleSend);
+  document.getElementById('chatInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleSend();
+  });
+  document.getElementById('chatSuggestions').addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    document.getElementById('chatInput').value = btn.dataset.q;
+    handleSend();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'c' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) {
+      document.getElementById('chatModal').classList.add('open');
+      setTimeout(() => document.getElementById('chatInput').focus(), 100);
+    }
+    if (e.key === 'Escape') {
+      document.getElementById('chatModal').classList.remove('open');
+    }
+  });
+})();
+</script>
+
+<!-- Rescue floating button -->
+<div class="rescue-panel">
+  <button class="rescue-btn" id="openRescue">🆘 Rescue Phrases</button>
+</div>
+<div class="rescue-modal" id="rescueModal">
+  <div class="box">
+    <h3>🆘 Quick Rescue Phrases · 緊急救援句</h3>
+
+    <div class="phrase">
+      <div class="en-p">"That's a great question. Let me think for a moment."</div>
+      <div class="zh-p">很好的問題，讓我想一下。</div>
+      <div class="ctx">Use when: brain blank. Pause 3-5 seconds.</div>
+    </div>
+    <div class="phrase">
+      <div class="en-p">"Could you repeat the question? I want to make sure I answer what you're really asking."</div>
+      <div class="zh-p">能再說一次嗎？我想確認我回答的是你真正問的。</div>
+      <div class="ctx">Use when: didn't catch the question.</div>
+    </div>
+    <div class="phrase">
+      <div class="en-p">"Could you rephrase that?"</div>
+      <div class="zh-p">能換個說法嗎？</div>
+      <div class="ctx">Use when: heard the words but unsure of meaning.</div>
+    </div>
+    <div class="phrase">
+      <div class="en-p">"I'm not familiar with that term — could you explain what you mean by [word]?"</div>
+      <div class="zh-p">我對那個詞不熟，能解釋一下嗎？</div>
+      <div class="ctx">Use when: unfamiliar vocabulary.</div>
+    </div>
+    <div class="phrase">
+      <div class="en-p">"Let me take that in two parts."</div>
+      <div class="zh-p">讓我分兩部分來回答。</div>
+      <div class="ctx">Use when: long/multi-part question. Buys time + signals structure.</div>
+    </div>
+    <div class="phrase">
+      <div class="en-p">"There are three things I'd point to here."</div>
+      <div class="zh-p">這裡我想指出三件事。</div>
+      <div class="ctx">Use when: need structure. Forces you to find 3 quickly.</div>
+    </div>
+    <div class="phrase">
+      <div class="en-p">"Let me restart that thought more clearly."</div>
+      <div class="zh-p">讓我把那個想法重新講清楚。</div>
+      <div class="ctx">Use when: tangled mid-sentence. Reset cleanly.</div>
+    </div>
+    <div class="phrase">
+      <div class="en-p">"Just to confirm — are you asking about [X] or about [Y]?"</div>
+      <div class="zh-p">讓我確認——你是在問 X 還是 Y？</div>
+      <div class="ctx">Use when: ambiguous question. Buys time + shows attentiveness.</div>
+    </div>
+    <div class="phrase">
+      <div class="en-p">"I want to be honest about that…"</div>
+      <div class="zh-p">關於這點我想坦白……</div>
+      <div class="ctx">Use when: tough/personal question. Signals integrity.</div>
+    </div>
+    <div class="phrase">
+      <div class="en-p">"Thank you for the thoughtful conversation. I hope to be part of the inaugural cohort."</div>
+      <div class="zh-p">謝謝你深入的對談，我希望能成為首屆同儕的一員。</div>
+      <div class="ctx">Closing line. Confident, warm, specific.</div>
+    </div>
+
+    <button class="rescue-close" onclick="document.getElementById('rescueModal').classList.remove('open')">關閉 Close</button>
+  </div>
+</div>
+
+<script>
+  // Mode toggle (EN / ZH / Both)
+  const toggle = document.getElementById('modeToggle');
+  toggle.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    toggle.querySelectorAll('button').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    document.body.dataset.mode = btn.dataset.mode;
+  });
+
+  // Rescue modal
+  document.getElementById('openRescue').addEventListener('click', () => {
+    document.getElementById('rescueModal').classList.add('open');
+  });
+  document.getElementById('rescueModal').addEventListener('click', (e) => {
+    if (e.target.id === 'rescueModal') e.target.classList.remove('open');
+  });
+
+  // Search filter
+  const search = document.getElementById('search');
+  search.addEventListener('input', () => {
+    const q = search.value.toLowerCase().trim();
+    document.querySelectorAll('.qa-card').forEach(card => {
+      if (!q) { card.style.display = ''; return; }
+      const t = card.textContent.toLowerCase();
+      card.style.display = t.includes(q) ? '' : 'none';
+    });
+  });
+
+  // Smooth scroll for ALL internal anchor links (sidebar + quick jump + any other)
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (!href || href.length < 2) return;
+    const tgt = document.querySelector(href);
+    if (!tgt) return;
+    e.preventDefault();
+    tgt.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Brief orange highlight so user clearly sees where they landed
+    const prevOutline = tgt.style.outline;
+    const prevOffset = tgt.style.outlineOffset;
+    const prevTransition = tgt.style.transition;
+    tgt.style.transition = 'outline-color 0.25s ease, outline-offset 0.25s ease';
+    tgt.style.outline = '3px solid #fb923c';
+    tgt.style.outlineOffset = '6px';
+    setTimeout(() => {
+      tgt.style.outline = prevOutline;
+      tgt.style.outlineOffset = prevOffset;
+      setTimeout(() => { tgt.style.transition = prevTransition; }, 300);
+    }, 1800);
+  });
+
+  // Back to Quick Jump section
+  function jumpToQuickJump() {
+    const tgt = document.getElementById('tight');
+    if (!tgt) return;
+    tgt.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // brief orange flash on the jump bar to confirm landing
+    const jumpBar = tgt.parentElement.querySelector('[style*="grid-template-columns"]');
+    if (jumpBar) {
+      const prev = jumpBar.style.boxShadow;
+      jumpBar.style.transition = 'box-shadow 0.3s ease';
+      jumpBar.style.boxShadow = '0 0 0 3px #fb923c, 0 0 32px rgba(249,115,22,0.5)';
+      setTimeout(() => { jumpBar.style.boxShadow = prev; }, 1500);
+    }
+  }
+  document.getElementById('backToJump').addEventListener('click', jumpToQuickJump);
+
+  // Keyboard: press "r" for rescue, "j" for jump back to Q1-Q8
+  document.addEventListener('keydown', (e) => {
+    if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+    if (e.key === 'r') {
+      document.getElementById('rescueModal').classList.add('open');
+    }
+    if (e.key === 'j') {
+      jumpToQuickJump();
+    }
+    if (e.key === 'Escape') {
+      document.getElementById('rescueModal').classList.remove('open');
+    }
+  });
+</script>
+</body>
+</html>
